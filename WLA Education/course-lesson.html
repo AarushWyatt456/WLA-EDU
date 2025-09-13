@@ -1,0 +1,434 @@
+<!-- course-lessons.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Lessons - Wyatt Academy</title>
+    <link rel="icon" href="img/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e73df;
+            --secondary: #f8f9fc;
+            --dark: #5a5c69;
+        }
+
+        .lesson-item {
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .lesson-item:hover {
+            background-color: var(--secondary);
+            border-left-color: var(--primary);
+        }
+
+        .lesson-item.completed {
+            border-left-color: var(--primary);
+        }
+
+        .lesson-item.completed .lesson-title {
+            color: var(--primary);
+        }
+
+        .lesson-item.active {
+            background-color: var(--secondary);
+            border-left-color: var(--primary);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .resource-icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar px-0" style="background: white; min-height: 100vh;">
+                <div class="sidebar-header text-center py-3 bg-light">
+                    <h5 id="courseTitle">Loading...</h5>
+                    <div class="progress mx-3">
+                        <div class="progress-bar" id="courseProgress" role="progressbar" style="width: 0%;"></div>
+                    </div>
+                    <small class="text-muted" id="progressText">0 of 0 lessons completed</small>
+                </div>
+                <div class="list-group list-group-flush" id="lessonsList">
+                    <div class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 id="currentLessonTitle">Select a lesson to begin</h2>
+                    <button class="btn btn-success" id="markCompleteBtn" style="display: none;">
+                        <i class="fas fa-check me-1"></i> Mark Complete
+                    </button>
+                </div>
+
+                <div class="alert alert-info" id="lessonPlaceholder">
+                    Please select a lesson from the sidebar to view its content.
+                </div>
+
+                <div class="video-container mb-4 rounded" id="videoContainer" style="display: none;">
+                    <iframe id="lessonVideo" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+                <div class="card mb-4" id="lessonDescriptionCard" style="display: none;">
+                    <div class="card-body">
+                        <h4 class="card-title">About This Lesson</h4>
+                        <div class="card-text" id="lessonDescription"></div>
+                    </div>
+                </div>
+
+                <div class="card" id="resourcesCard" style="display: none;">
+                    <div class="card-body">
+                        <h4 class="card-title">Resources</h4>
+                        <ul class="list-group list-group-flush" id="lessonResources"></ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Check authentication
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Get course ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('id');
+
+            // Load course data
+            loadCourse(courseId, user.id);
+
+            function loadCourse(courseId, userId) {
+                $.ajax({
+                    url: 'api.php?action=get_course_lessons',
+                    method: 'GET',
+                    data: {
+                        course_id: courseId,
+                        user_id: userId
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            displayCourse(response.course, response.sections, response.progress);
+                        } else {
+                            alert('Error loading course: ' + response.message);
+                            window.location.href = 'my-courses.html';
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error loading course: ' + error);
+                        window.location.href = 'my-courses.html';
+                    }
+                });
+            }
+
+            function displayCourse(course, sections, progress) {
+                // Update course info
+                $('#courseTitle').text(course.title);
+                $('#courseProgress').css('width', `${progress.progress}%`);
+                $('#progressText').text(`${progress.completed_lessons} of ${progress.total_lessons} lessons completed`);
+
+                // Build lessons list
+                let lessonsHtml = '';
+                sections.forEach(section => {
+                    lessonsHtml += `
+                        <div class="list-group-item bg-light">
+                            <strong>${section.title}</strong>
+                        </div>
+                    `;
+
+                    section.lessons.forEach(lesson => {
+                        lessonsHtml += `
+                            <a href="#" class="list-group-item list-group-item-action lesson-item 
+                                ${lesson.is_completed ? 'completed' : ''}" 
+                                data-id="${lesson.id}" 
+                                data-section="${section.id}"
+                                data-video="${lesson.video_url}">
+                                <div class="d-flex justify-content-between">
+                                    <span class="lesson-title">${lesson.title}</span>
+                                    <small class="text-muted">${formatDuration(lesson.duration)}</small>
+                                </div>
+                                ${lesson.is_completed ? '<small class="text-success"><i class="fas fa-check"></i> Completed</small>' : ''}
+                            </a>
+                        `;
+                    });
+                });
+
+                $('#lessonsList').html(lessonsHtml);
+
+                // Set first incomplete lesson as current (or last if all completed)
+                let currentLesson = null;
+                for (const section of sections) {
+                    for (const lesson of section.lessons) {
+                        if (!lesson.is_completed) {
+                            currentLesson = lesson;
+                            currentLesson.section_id = section.id;
+                            break;
+                        }
+                    }
+                    if (currentLesson) break;
+                }
+
+                if (!currentLesson && sections.length > 0 && sections[0].lessons.length > 0) {
+                    currentLesson = sections[sections.length - 1].lessons[sections[sections.length - 1].lessons.length - 1];
+                    currentLesson.section_id = sections[sections.length - 1].id;
+                }
+
+                if (currentLesson) {
+                    loadLesson(currentLesson, course.id, user.id);
+                }
+            }
+
+            function formatDuration(minutes) {
+                if (!minutes) return '0:00';
+                const hrs = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return hrs > 0 ? `${hrs}:${mins.toString().padStart(2, '0')}` : `${mins}:00`;
+            }
+
+            // Lesson click handler
+            $(document).on('click', '.lesson-item', function (e) {
+                e.preventDefault();
+                const lessonId = $(this).data('id');
+                const sectionId = $(this).data('section');
+                const courseId = new URLSearchParams(window.location.search).get('id');
+
+                // Find the lesson in our data
+                $.ajax({
+                    url: 'api.php?action=get_course_lessons',
+                    method: 'GET',
+                    data: {
+                        course_id: courseId,
+                        user_id: user.id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            let foundLesson = null;
+                            for (const section of response.sections) {
+                                if (section.id == sectionId) {
+                                    for (const lesson of section.lessons) {
+                                        if (lesson.id == lessonId) {
+                                            foundLesson = lesson;
+                                            foundLesson.section_id = section.id;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (foundLesson) break;
+                            }
+
+                            if (foundLesson) {
+                                loadLesson(foundLesson, courseId, user.id);
+
+                                // Update last accessed in database
+                                $.ajax({
+                                    url: 'api.php?action=update_progress',
+                                    method: 'POST',
+                                    data: {
+                                        user_id: user.id,
+                                        lesson_id: lessonId,
+                                        course_id: courseId,
+                                        progress: 0,
+                                        completed: false
+                                    },
+                                    dataType: 'json'
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+
+            function loadLesson(lesson, courseId, userId) {
+                // Show lesson content area
+                $('#lessonPlaceholder').hide();
+                $('#videoContainer').show();
+                $('#lessonDescriptionCard').show();
+                $('#resourcesCard').show();
+                $('#markCompleteBtn').show();
+
+                // Update lesson info
+                $('#currentLessonTitle').text(lesson.title).data({
+                    'id': lesson.id,
+                    'section-id': lesson.section_id,
+                    'completed': lesson.is_completed
+                });
+
+                if (lesson.video_url) {
+                    $('#lessonVideo').attr('src', lesson.video_url);
+                } else {
+                    $('#videoContainer').hide();
+                }
+
+                $('#lessonDescription').html(lesson.description || '<p>No description available.</p>');
+
+                // Update active lesson in sidebar
+                $('.lesson-item').removeClass('active');
+                $(`.lesson-item[data-id="${lesson.id}"]`).addClass('active');
+
+                // Update mark complete button
+                $('#markCompleteBtn')
+                    .toggleClass('btn-success btn-secondary', lesson.is_completed)
+                    .html(lesson.is_completed ?
+                        '<i class="fas fa-check-circle me-1"></i> Completed' :
+                        '<i class="fas fa-check me-1"></i> Mark Complete')
+                    .data('completed', lesson.is_completed);
+
+                // Load resources (in a real app, this would come from the database)
+                loadLessonResources(lesson.id);
+            }
+
+            function loadLessonResources(lessonId) {
+                // In a real app, you would fetch this from your database
+                // For now we'll use sample data
+                const sampleResources = [
+                    { type: "pdf", title: "Lesson Slides", url: "#" },
+                    { type: "code", title: "Sample Code", url: "#" },
+                    { type: "link", title: "Reference Documentation", url: "#" }
+                ];
+
+                const resourcesHtml = sampleResources.map(resource => `
+                    <li class="list-group-item">
+                        <div class="d-flex align-items-center">
+                            <span class="resource-icon">
+                                ${getResourceIcon(resource.type)}
+                            </span>
+                            <a href="${resource.url}" class="text-decoration-none" target="_blank">
+                                ${resource.title}
+                            </a>
+                        </div>
+                    </li>
+                `).join('');
+
+                $('#lessonResources').html(resourcesHtml);
+            }
+
+            function getResourceIcon(type) {
+                const icons = {
+                    'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+                    'code': '<i class="fas fa-code text-primary"></i>',
+                    'link': '<i class="fas fa-external-link-alt text-info"></i>',
+                    'document': '<i class="fas fa-file-word text-primary"></i>'
+                };
+                return icons[type] || '<i class="fas fa-file"></i>';
+            }
+
+            // Mark complete button
+            $('#markCompleteBtn').click(function () {
+                const lessonId = $('#currentLessonTitle').data('id');
+                const courseId = new URLSearchParams(window.location.search).get('id');
+                const isCompleted = !$(this).data('completed');
+
+                $.ajax({
+                    url: 'api.php?action=update_progress',
+                    method: 'POST',
+                    data: {
+                        user_id: user.id,
+                        lesson_id: lessonId,
+                        course_id: courseId,
+                        progress: isCompleted ? 100 : 0,
+                        completed: isCompleted
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            // Update UI
+                            const $lessonItem = $(`.lesson-item[data-id="${lessonId}"]`);
+
+                            if (isCompleted) {
+                                $lessonItem.addClass('completed')
+                                    .find('.lesson-title').css('color', 'var(--primary)');
+                                $lessonItem.append(
+                                    '<small class="text-success"><i class="fas fa-check"></i> Completed</small>'
+                                );
+                                $('#markCompleteBtn')
+                                    .removeClass('btn-success')
+                                    .addClass('btn-secondary')
+                                    .html('<i class="fas fa-check-circle me-1"></i> Completed')
+                                    .data('completed', true);
+                            } else {
+                                $lessonItem.removeClass('completed')
+                                    .find('.lesson-title').css('color', '');
+                                $lessonItem.find('small.text-success').remove();
+                                $('#markCompleteBtn')
+                                    .removeClass('btn-secondary')
+                                    .addClass('btn-success')
+                                    .html('<i class="fas fa-check me-1"></i> Mark Complete')
+                                    .data('completed', false);
+                            }
+
+                            // Refresh course progress
+                            refreshCourseProgress(courseId, user.id);
+                        } else {
+                            alert('Error updating progress');
+                        }
+                    },
+                    error: function () {
+                        alert('Error updating progress');
+                    }
+                });
+            });
+
+            function refreshCourseProgress(courseId, userId) {
+                $.ajax({
+                    url: 'api.php?action=get_course_lessons',
+                    method: 'GET',
+                    data: {
+                        course_id: courseId,
+                        user_id: userId
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            $('#courseProgress').css('width', `${response.progress.progress}%`);
+                            $('#progressText').text(
+                                `${response.progress.completed_lessons} of ${response.progress.total_lessons} lessons completed`
+                            );
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

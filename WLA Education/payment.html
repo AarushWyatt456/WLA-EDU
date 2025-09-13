@@ -1,0 +1,1681 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Payment</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-light: #6366f1;
+            --primary-lighter: #818cf8;
+            --secondary-color: #7c3aed;
+            --success-color: #10b981;
+            --info-color: #3b82f6;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --darker-color: #111827;
+            --light-color: #f9fafb;
+            --lighter-color: #f3f4f6;
+            --gray-color: #6b7280;
+            --border-color: #e5e7eb;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .login-required {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .login-required i {
+            font-size: 60px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .login-required h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .login-required p {
+            margin-bottom: 25px;
+            color: var(--gray-color);
+            font-size: 16px;
+        }
+
+        .login-required .btn_1 {
+            margin-top: 15px;
+        }
+
+        .payment-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            background: white;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .payment-header {
+            padding: 30px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            position: relative;
+        }
+
+        .payment-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .payment-header h2 {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .payment-header p {
+            opacity: 0.9;
+            font-weight: 400;
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .payment-content {
+            padding: 40px;
+        }
+
+        .payment-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--border-color);
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            width: 33%;
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-step .step-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            border: 4px solid white;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .progress-step.active .step-number {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .progress-step.completed .step-number {
+            background: var(--success-color);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3), 0 2px 4px -1px rgba(16, 185, 129, 0.2);
+        }
+
+        .progress-step .step-label {
+            font-size: 14px;
+            color: var(--gray-color);
+            text-align: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .progress-step.active .step-label,
+        .progress-step.completed .step-label {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .payment-details {
+            display: flex;
+            gap: 30px;
+        }
+
+        .payment-methods-container {
+            flex: 2;
+        }
+
+        .order-summary-container {
+            flex: 1;
+        }
+
+        .order-summary {
+            background: var(--light-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .order-summary h4 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .order-item span:first-child {
+            color: var(--gray-color);
+        }
+
+        .order-total {
+            font-weight: 600;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            margin-top: 12px;
+            font-size: 16px;
+        }
+
+        .order-total span:last-child {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .payment-plan {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--box-shadow);
+        }
+
+        .payment-plan h4 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .payment-plan p {
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .price .period {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--gray-color);
+            margin-left: 8px;
+        }
+
+        .installment-options {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .installment-option {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            font-size: 14px;
+        }
+
+        .installment-option:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .installment-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(79, 70, 229, 0.05);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .payment-methods {
+            margin-bottom: 30px;
+        }
+
+        .payment-methods h5 {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--box-shadow);
+            transform: translateY(-2px);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background: rgba(79, 70, 229, 0.03);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .payment-method img {
+            width: 50px;
+            height: 35px;
+            object-fit: contain;
+            margin-right: 15px;
+            filter: grayscale(100%);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .payment-method.active img {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        .payment-method .method-info {
+            flex-grow: 1;
+        }
+
+        .payment-method .method-info h5 {
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--dark-color);
+        }
+
+        .payment-method .method-info p {
+            margin: 0;
+            color: var(--gray-color);
+            font-size: 13px;
+        }
+
+        .payment-method .checkmark {
+            color: var(--primary-color);
+            font-size: 20px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .payment-method.active .checkmark {
+            opacity: 1;
+        }
+
+        .payment-form {
+            display: none;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            background: white;
+            box-shadow: var(--box-shadow);
+        }
+
+        .payment-form.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 14px;
+            background-color: var(--light-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            background-color: white;
+        }
+
+        .row {
+            display: flex;
+            margin: 0 -10px;
+        }
+
+        .col {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn-pay:active {
+            transform: translateY(0);
+        }
+
+        .btn-pay:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .secure-payment {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray-color);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secure-payment i {
+            color: var(--success-color);
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .payment-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-back {
+            padding: 12px 25px;
+            background: white;
+            color: var(--gray-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: var(--light-color);
+            color: var(--dark-color);
+            border-color: var(--gray-color);
+        }
+
+        .btn_1 {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn_1:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3), 0 4px 6px -2px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn_1:active {
+            transform: translateY(0);
+        }
+
+        .coupon-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .coupon-input {
+            flex: 1;
+        }
+
+        .btn-coupon {
+            background: var(--info-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3), 0 2px 4px -1px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-coupon:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -2px rgba(59, 130, 246, 0.2);
+        }
+
+        .coupon-success {
+            color: var(--success-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .coupon-error {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .payment-terms {
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray-color);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .payment-terms input {
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+
+        .payment-terms a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .payment-terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Credit card styles */
+        .card-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .card-display {
+            height: 200px;
+            perspective: 1000px;
+            margin-bottom: 25px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #4b5563 0%, #1f2937 100%);
+        }
+
+        .card-logo {
+            text-align: right;
+            height: 40px;
+        }
+
+        .card-number {
+            font-size: 20px;
+            letter-spacing: 1px;
+            margin: 30px 0 20px;
+            font-family: 'Courier New', monospace;
+            word-spacing: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .card-expiry,
+        .card-name {
+            font-size: 14px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .card-name {
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-cvv {
+            height: 40px;
+            background: white;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 15px;
+            margin-top: 30px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-cvv-label {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .flip-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .flip-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Success message */
+        .payment-success {
+            text-align: center;
+            padding: 60px 40px;
+            display: none;
+        }
+
+        .payment-success i {
+            font-size: 80px;
+            color: var(--success-color);
+            margin-bottom: 25px;
+            animation: bounce 0.6s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .payment-success h3 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .payment-success p {
+            margin-bottom: 10px;
+            color: var(--gray-color);
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .payment-success .btn_1 {
+            margin-top: 25px;
+            padding: 12px 30px;
+        }
+
+        /* Bank info styles */
+        .bank-info {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .bank-info p {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bank-info p strong {
+            color: var(--dark-color);
+            min-width: 120px;
+            display: inline-block;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .payment-details {
+                flex-direction: column;
+            }
+
+            .order-summary {
+                position: static;
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .payment-content {
+                padding: 30px 20px;
+            }
+
+            .payment-header {
+                padding: 25px 20px;
+            }
+
+            .payment-progress {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                padding: 0;
+            }
+
+            .progress-bar {
+                display: none;
+            }
+
+            .progress-step {
+                margin: 0 10px;
+            }
+
+            .row {
+                flex-direction: column;
+                margin: 0;
+            }
+
+            .col {
+                padding: 0;
+                margin-bottom: 15px;
+            }
+
+            .payment-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-back,
+            .btn_1 {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="about.html">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="cource.html">Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="blog.html">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="getstart.html">Get Started</a>
+                                </li>
+                                <li class="d-none d-lg-block">
+                                    <a class="btn_1" href="register.html" id="auth-btn">Login/Sign Up</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end-->
+
+    <!-- Payment Section -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="payment-container">
+                <!-- Login Required Message (shown when not logged in) -->
+                <div class="login-required" id="login-required">
+                    <i class="ti-lock"></i>
+                    <h3>Login Required</h3>
+                    <p>You need to be logged in to complete your payment. Please login or create an account to continue.
+                    </p>
+                    <a href="login.html" class="btn_1">Login</a>
+                    <a href="register.html" class="btn_1"
+                        style="background: var(--secondary-color); margin-left: 10px;">Sign Up</a>
+                </div>
+
+                <!-- Payment Content (shown when logged in) -->
+                <div id="payment-content" style="display: none;">
+                    <div class="payment-header">
+                        <h2>Complete Your Enrollment</h2>
+                        <p>Follow these simple steps to enroll in your selected course</p>
+                    </div>
+
+                    <div class="payment-content">
+                        <div class="payment-progress">
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" id="progress-fill"></div>
+                            </div>
+                            <div class="progress-step completed">
+                                <div class="step-number">1</div>
+                                <div class="step-label">Course Selection</div>
+                            </div>
+                            <div class="progress-step active">
+                                <div class="step-number">2</div>
+                                <div class="step-label">Payment</div>
+                            </div>
+                            <div class="progress-step">
+                                <div class="step-number">3</div>
+                                <div class="step-label">Confirmation</div>
+                            </div>
+                        </div>
+
+                        <div id="payment-form-section">
+                            <div class="payment-details">
+                                <div class="payment-methods-container">
+                                    <div class="payment-plan">
+                                        <h4 id="course-title">Python Programming</h4>
+                                        <p id="course-description">Comprehensive Python course from beginner to advanced
+                                            levels</p>
+                                        <div class="price">$<span id="course-price">99</span><span
+                                                class="period">/month</span></div>
+                                        <div class="installment-options" id="installment-options">
+                                            <div class="installment-option selected" data-months="1" data-total="99">
+                                                <span>Pay in full</span>
+                                                <span>$99.00</span>
+                                            </div>
+                                            <div class="installment-option" data-months="3" data-total="102">
+                                                <span>3 monthly payments</span>
+                                                <span>$34.00/month ($102 total)</span>
+                                            </div>
+                                            <div class="installment-option" data-months="6" data-total="108">
+                                                <span>6 monthly payments</span>
+                                                <span>$18.00/month ($108 total)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="payment-methods">
+                                        <h5>Select Payment Method</h5>
+
+                                        <div class="payment-method active" data-method="card">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/179/179457.png"
+                                                alt="Credit Card">
+                                            <div class="method-info">
+                                                <h5>Credit/Debit Card</h5>
+                                                <p>Pay with Visa, Mastercard, or other cards</p>
+                                            </div>
+                                            <i class="ti-check checkmark"></i>
+                                        </div>
+
+                                        <div class="payment-method" data-method="kpay">
+                                            <img src="kpay.png" alt="KPay">
+                                            <div class="method-info">
+                                                <h5>KPay</h5>
+                                                <p>Fast and secure payment with KPay</p>
+                                            </div>
+                                            <i class="ti-check checkmark"></i>
+                                        </div>
+
+                                        <div class="payment-method" data-method="wave">
+                                            <img src="Wave.png" alt="Wave Money">
+                                            <div class="method-info">
+                                                <h5>Wave Money</h5>
+                                                <p>Convenient mobile payment</p>
+                                            </div>
+                                            <i class="ti-check checkmark"></i>
+                                        </div>
+
+                                        <div class="payment-method" data-method="bank">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/2553/2553616.png"
+                                                alt="Bank Transfer">
+                                            <div class="method-info">
+                                                <h5>Bank Transfer</h5>
+                                                <p>Direct transfer to our bank account</p>
+                                            </div>
+                                            <i class="ti-check checkmark"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Card Payment Form -->
+                                    <div class="payment-form active" id="card-payment">
+                                        <div class="card-wrapper">
+                                            <div class="card-display">
+                                                <div class="card-inner" id="card-inner">
+                                                    <div class="card-front">
+                                                        <div class="card-logo">
+                                                            <i class="fab fa-cc-visa fa-2x"></i>
+                                                        </div>
+                                                        <div class="card-number" id="display-card-number">•••• •••• ••••
+                                                            ••••</div>
+                                                        <div class="card-details">
+                                                            <div class="card-name" id="display-card-name">FULL NAME
+                                                            </div>
+                                                            <div class="card-expiry" id="display-card-expiry">MM/YY
+                                                            </div>
+                                                        </div>
+                                                        <button class="flip-btn" id="flip-card"><i
+                                                                class="ti-exchange-vertical"></i></button>
+                                                    </div>
+                                                    <div class="card-back">
+                                                        <div class="card-cvv-label">CVV</div>
+                                                        <div class="card-cvv" id="display-card-cvv">•••</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <form id="card-form">
+                                                <div class="form-group">
+                                                    <label for="card-number">Card Number</label>
+                                                    <input type="text" id="card-number" class="form-control"
+                                                        placeholder="1234 5678 9012 3456" maxlength="19">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="card-name">Name on Card</label>
+                                                    <input type="text" id="card-name" class="form-control"
+                                                        placeholder="John Doe">
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="expiry-date">Expiry Date</label>
+                                                            <input type="text" id="expiry-date" class="form-control"
+                                                                placeholder="MM/YY" maxlength="5">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="cvv">CVV</label>
+                                                            <input type="text" id="cvv" class="form-control"
+                                                                placeholder="123" maxlength="3">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="payment-terms">
+                                                    <input type="checkbox" id="terms-agree" required>
+                                                    <label for="terms-agree">I agree to the <a href="#">Terms of
+                                                            Service</a>
+                                                        and <a href="#">Privacy Policy</a></label>
+                                                </div>
+
+                                                <button type="submit" class="btn-pay" id="card-pay-btn">
+                                                    <span>Pay $<span id="card-pay-amount">99.00</span></span>
+                                                    <div class="spinner" id="card-spinner"></div>
+                                                </button>
+
+                                                <div class="secure-payment">
+                                                    <i class="ti-lock"></i> Secure SSL encrypted payment
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!-- KPay Payment Form -->
+                                    <div class="payment-form" id="kpay-payment">
+                                        <div class="text-center">
+                                            <img src="kpay.png" alt="KPay" style="width: 150px; margin-bottom: 20px;">
+                                            <p>Complete your payment using KPay mobile app</p>
+                                            <div class="form-group">
+                                                <label for="kpay-phone">Phone Number</label>
+                                                <input type="text" id="kpay-phone" class="form-control"
+                                                    placeholder="09XXXXXXXX">
+                                            </div>
+                                            <div class="payment-terms">
+                                                <input type="checkbox" id="kpay-terms" required>
+                                                <label for="kpay-terms">I agree to the <a href="#">Terms of
+                                                        Service</a></label>
+                                            </div>
+                                            <button type="button" class="btn-pay" id="kpay-pay-btn"
+                                                style="background: linear-gradient(135deg, #FF5F6D 0%, #FFC371 100%);">
+                                                <span>Pay with KPay</span>
+                                                <div class="spinner" id="kpay-spinner"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Wave Payment Form -->
+                                    <div class="payment-form" id="wave-payment">
+                                        <div class="text-center">
+                                            <img src="Wave.png" alt="Wave Money"
+                                                style="width: 150px; margin-bottom: 20px;">
+                                            <p>Complete your payment using Wave Money app</p>
+                                            <div class="form-group">
+                                                <label for="wave-phone">Phone Number</label>
+                                                <input type="text" id="wave-phone" class="form-control"
+                                                    placeholder="09XXXXXXXX">
+                                            </div>
+                                            <div class="payment-terms">
+                                                <input type="checkbox" id="wave-terms" required>
+                                                <label for="wave-terms">I agree to the <a href="#">Terms of
+                                                        Service</a></label>
+                                            </div>
+                                            <button type="button" class="btn-pay" id="wave-pay-btn"
+                                                style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);">
+                                                <span>Pay with Wave</span>
+                                                <div class="spinner" id="wave-spinner"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bank Transfer Form -->
+                                    <div class="payment-form" id="bank-payment">
+                                        <div class="text-center">
+                                            <h5>Bank Transfer Instructions</h5>
+                                            <p>Please transfer the payment to the following account:</p>
+
+                                            <div class="bank-info">
+                                                <p><strong>Bank Name:</strong> CB Bank</p>
+                                                <p><strong>Account Name:</strong> Wyatt Academy Education</p>
+                                                <p><strong>Account Number:</strong> 123456789</p>
+                                                <p><strong>Amount:</strong> $<span id="bank-amount">99.00</span></p>
+                                            </div>
+
+                                            <p>After making the transfer, please upload the receipt below:</p>
+
+                                            <div class="form-group">
+                                                <label for="bank-receipt">Upload Payment Receipt</label>
+                                                <input type="file" id="bank-receipt" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="bank-reference">Reference Number</label>
+                                                <input type="text" id="bank-reference" class="form-control"
+                                                    placeholder="Enter reference number">
+                                            </div>
+
+                                            <div class="payment-terms">
+                                                <input type="checkbox" id="bank-terms" required>
+                                                <label for="bank-terms">I agree to the <a href="#">Terms of
+                                                        Service</a></label>
+                                            </div>
+
+                                            <button type="button" class="btn-pay" id="bank-pay-btn"
+                                                style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                                                <span>Submit Receipt</span>
+                                                <div class="spinner" id="bank-spinner"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="order-summary-container">
+                                    <div class="order-summary">
+                                        <h4>Order Summary</h4>
+                                        <div class="order-item">
+                                            <span>Python Programming</span>
+                                            <span>$99.00</span>
+                                        </div>
+                                        <div class="order-item">
+                                            <span>Installment fee</span>
+                                            <span id="installment-fee">$0.00</span>
+                                        </div>
+                                        <div class="order-item">
+                                            <span>Discount</span>
+                                            <span id="discount-amount">-$0.00</span>
+                                        </div>
+                                        <div class="order-item order-total">
+                                            <span>Total</span>
+                                            <span id="total-amount">$99.00</span>
+                                        </div>
+
+                                        <div class="coupon-form">
+                                            <input type="text" id="coupon-code" class="form-control coupon-input"
+                                                placeholder="Coupon code">
+                                            <button type="button" class="btn-coupon" id="apply-coupon">Apply</button>
+                                        </div>
+                                        <div class="coupon-success" id="coupon-success">
+                                            <i class="ti-check"></i> Coupon applied successfully!
+                                        </div>
+                                        <div class="coupon-error" id="coupon-error">
+                                            <i class="ti-close"></i> Invalid coupon code
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 20px;">
+                                            <label for="payment-plan">Payment Plan</label>
+                                            <select id="payment-plan" class="form-control">
+                                                <option value="full">Pay in full</option>
+                                                <option value="installment">Monthly installments</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="payment-terms" style="margin-top: 20px;">
+                                            <input type="checkbox" id="newsletter-subscribe" checked>
+                                            <label for="newsletter-subscribe">Subscribe to newsletter</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="payment-footer">
+                                <button type="button" class="btn-back" id="back-btn">
+                                    <i class="ti-arrow-left"></i> Back to Courses
+                                </button>
+                                <button type="button" class="btn_1" id="save-exit-btn">
+                                    Save and Exit
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Success Message -->
+                        <div class="payment-success" id="payment-success">
+                            <i class="ti-check"></i>
+                            <h3>Payment Successful!</h3>
+                            <p>Thank you for your payment. Your enrollment in <strong>Python Programming</strong> is now
+                                complete.</p>
+                            <p>We've sent the course details to your email address.</p>
+                            <a href="cource.html" class="btn_1">Access Your Course</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer part start-->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt=""> </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses and learning tips</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-skype"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 34 x 35 Street, Mandalay</p>
+                            <p><span> Phone :</span> +959 796796797</p>
+                            <p><span> Email : </span>info@wla.edu </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    This website is made with <i class="ti-heart" aria-hidden="true"></i> by <a
+                                        href="index.html" target="_blank">Wai Lin Aung</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer part end-->
+
+    <!-- jquery plugins here-->
+    <!-- jquery -->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            function checkAuth() {
+                const currentUser = localStorage.getItem('currentUserEmail');
+                if (currentUser) {
+                    // User is logged in
+                    $('#login-required').hide();
+                    $('#payment-content').show();
+                    $('#auth-btn').text('My Account'); // Change button text
+
+                    // Get user data
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    const user = users.find(u => u.email === currentUser);
+
+                    if (user) {
+                        // Update UI with user info if needed
+                        console.log('Logged in as:', user.name);
+                    }
+                } else {
+                    // User is not logged in
+                    $('#login-required').show();
+                    $('#payment-content').hide();
+                    $('#auth-btn').text('Login/Sign Up');
+                }
+            }
+
+            // Initialize auth check
+            checkAuth();
+
+            // Get course details from URL parameters
+            function getUrlParams() {
+                var params = {};
+                var queryString = window.location.search.substring(1);
+                var pairs = queryString.split('&');
+
+                for (var i = 0; i < pairs.length; i++) {
+                    var pair = pairs[i].split('=');
+                    params[pair[0]] = decodeURIComponent(pair[1] || '');
+                }
+
+                return params;
+            }
+
+            var params = getUrlParams();
+            if (params.course) {
+                $('#course-title').text(params.course);
+                $('#payment-success strong').text(params.course);
+            }
+            if (params.description) {
+                $('#course-description').text(params.description);
+            }
+            if (params.price) {
+                var price = parseFloat(params.price);
+                $('#course-price').text(price.toFixed(2));
+                updateAmounts(price, 0, 0);
+            }
+
+            // Update all amount displays
+            function updateAmounts(basePrice, discount, installmentFee) {
+                var total = basePrice + installmentFee - discount;
+
+                $('#card-pay-amount').text(total.toFixed(2));
+                $('#bank-amount').text(total.toFixed(2));
+                $('#installment-fee').text('$' + installmentFee.toFixed(2));
+                $('#discount-amount').text('-$' + discount.toFixed(2));
+                $('#total-amount').text('$' + total.toFixed(2));
+            }
+
+            // Handle payment method selection
+            $('.payment-method').click(function () {
+                $('.payment-method').removeClass('active');
+                $(this).addClass('active');
+
+                var method = $(this).data('method');
+                $('.payment-form').removeClass('active');
+                $('#' + method + '-payment').addClass('active');
+            });
+
+            // Handle installment plan selection
+            $('#payment-plan').change(function () {
+                if ($(this).val() === 'installment') {
+                    $('#installment-options').slideDown();
+                    $('.installment-option').first().addClass('selected');
+                    var basePrice = parseFloat($('#course-price').text());
+                    var installmentFee = 3; // Example fee
+                    var discount = parseFloat($('#discount-amount').text().replace('-$', '') || 0);
+                    updateAmounts(basePrice, discount, installmentFee);
+                } else {
+                    $('#installment-options').slideUp();
+                    var basePrice = parseFloat($('#course-price').text());
+                    var discount = parseFloat($('#discount-amount').text().replace('-$', '') || 0);
+                    updateAmounts(basePrice, discount, 0);
+                }
+            });
+
+            // Handle installment option selection
+            $(document).on('click', '.installment-option', function () {
+                $('.installment-option').removeClass('selected');
+                $(this).addClass('selected');
+
+                var basePrice = parseFloat($('#course-price').text());
+                var total = parseFloat($(this).data('total'));
+                var discount = parseFloat($('#discount-amount').text().replace('-$', '') || 0);
+                var installmentFee = total - basePrice;
+                updateAmounts(basePrice, discount, installmentFee);
+            });
+
+            // Apply coupon code
+            $('#apply-coupon').click(function () {
+                var couponCode = $('#coupon-code').val();
+                var basePrice = parseFloat($('#course-price').text());
+                var installmentFee = parseFloat($('#installment-fee').text().replace('$', '') || 0);
+
+                // Simulate coupon validation
+                if (couponCode === 'WYATT20') {
+                    var discount = basePrice * 0.2; // 20% discount
+                    updateAmounts(basePrice, discount, installmentFee);
+                    $('#coupon-success').show();
+                    $('#coupon-error').hide();
+                } else if (couponCode) {
+                    $('#coupon-error').show();
+                    $('#coupon-success').hide();
+                }
+            });
+
+            // Credit card form formatting
+            $('#card-number').on('input', function () {
+                var val = $(this).val().replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                var formatted = val.replace(/(\d{4})/g, '$1 ').trim();
+                $(this).val(formatted);
+                $('#display-card-number').text(formatted || '•••• •••• •••• ••••');
+
+                // Detect card type
+                if (/^4/.test(val)) {
+                    $('.card-logo').html('<i class="fab fa-cc-visa fa-2x"></i>');
+                } else if (/^5[1-5]/.test(val)) {
+                    $('.card-logo').html('<i class="fab fa-cc-mastercard fa-2x"></i>');
+                } else if (/^3[47]/.test(val)) {
+                    $('.card-logo').html('<i class="fab fa-cc-amex fa-2x"></i>');
+                } else {
+                    $('.card-logo').html('<i class="far fa-credit-card fa-2x"></i>');
+                }
+            });
+
+            $('#card-name').on('input', function () {
+                $('#display-card-name').text($(this).val().toUpperCase() || 'FULL NAME');
+            });
+
+            $('#expiry-date').on('input', function () {
+                var val = $(this).val().replace(/[^0-9]/gi, '');
+                if (val.length > 2) {
+                    val = val.substring(0, 2) + '/' + val.substring(2, 4);
+                }
+                $(this).val(val);
+                $('#display-card-expiry').text(val || 'MM/YY');
+            });
+
+            $('#cvv').on('input', function () {
+                var val = $(this).val().replace(/[^0-9]/gi, '');
+                $(this).val(val);
+                $('#display-card-cvv').text(val ? '•'.repeat(val.length) : '•••');
+            });
+
+            // Flip card to show back
+            $('#flip-card').click(function (e) {
+                e.preventDefault();
+                $('#card-inner').toggleClass('flipped');
+            });
+
+            // CVV field focus automatically flips card
+            $('#cvv').focus(function () {
+                if (!$('#card-inner').hasClass('flipped')) {
+                    $('#card-inner').addClass('flipped');
+                }
+            });
+
+            // Other fields focus flips card back
+            $('#card-number, #card-name, #expiry-date').focus(function () {
+                if ($('#card-inner').hasClass('flipped')) {
+                    $('#card-inner').removeClass('flipped');
+                }
+            });
+
+            // Form submission handlers
+            $('#card-form').submit(function (e) {
+                e.preventDefault();
+                if (!$('#terms-agree').is(':checked')) {
+                    alert('Please agree to the terms and conditions');
+                    return;
+                }
+
+                $('#card-spinner').show();
+                $('#card-pay-btn span').hide();
+
+                // Simulate payment processing
+                setTimeout(function () {
+                    $('#card-spinner').hide();
+                    $('#card-pay-btn span').show();
+                    completePayment();
+                }, 2000);
+            });
+
+            $('#kpay-pay-btn').click(function () {
+                if (!$('#kpay-terms').is(':checked')) {
+                    alert('Please agree to the terms and conditions');
+                    return;
+                }
+
+                $('#kpay-spinner').show();
+                $(this).find('span').hide();
+
+                setTimeout(function () {
+                    $('#kpay-spinner').hide();
+                    $('#kpay-pay-btn span').show();
+                    completePayment();
+                }, 2000);
+            });
+
+            $('#wave-pay-btn').click(function () {
+                if (!$('#wave-terms').is(':checked')) {
+                    alert('Please agree to the terms and conditions');
+                    return;
+                }
+
+                $('#wave-spinner').show();
+                $(this).find('span').hide();
+
+                setTimeout(function () {
+                    $('#wave-spinner').hide();
+                    $('#wave-pay-btn span').show();
+                    completePayment();
+                }, 2000);
+            });
+
+            $('#bank-pay-btn').click(function () {
+                if (!$('#bank-terms').is(':checked')) {
+                    alert('Please agree to the terms and conditions');
+                    return;
+                }
+
+                $('#bank-spinner').show();
+                $(this).find('span').hide();
+
+                setTimeout(function () {
+                    $('#bank-spinner').hide();
+                    $('#bank-pay-btn span').show();
+                    completePayment();
+                }, 2000);
+            });
+
+            function completePayment() {
+                // Get current user and course details
+                const currentUser = localStorage.getItem('currentUserEmail');
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.email === currentUser);
+
+                if (userIndex !== -1) {
+                    // Initialize courses array if it doesn't exist
+                    if (!users[userIndex].courses) {
+                        users[userIndex].courses = [];
+                    }
+
+                    // Add the purchased course
+                    const courseId = $('#course-title').text().toLowerCase().replace(/\s/g, '-');
+                    const courseName = $('#course-title').text();
+                    const coursePrice = parseFloat($('#course-price').text());
+
+                    users[userIndex].courses.push({
+                        id: courseId,
+                        name: courseName,
+                        price: coursePrice,
+                        purchaseDate: new Date().toISOString(),
+                        progress: 0
+                    });
+
+                    // Update user data
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+
+                // Show success message
+                $('#payment-form-section').hide();
+                $('#payment-success').show();
+                $('#progress-fill').css('width', '100%');
+                $('.progress-step').removeClass('active').addClass('completed');
+                $('.progress-step').eq(2).addClass('active');
+            }
+
+            // Back button
+            $('#back-btn').click(function () {
+                window.location.href = 'getstart.html';
+            });
+
+            // Save and exit button
+            $('#save-exit-btn').click(function () {
+                alert('Your progress has been saved. You can return later to complete your payment.');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

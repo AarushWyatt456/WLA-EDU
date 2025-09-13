@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Messages - Wyatt Academy</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .message-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .message-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-unread {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Same header as settings.html -->
+
+    <div class="dashboard-container">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Same sidebar as settings.html -->
+
+                <!-- Main Content -->
+                <div class="col-lg-9 col-md-8 dashboard-content">
+                    <div class="dashboard-header">
+                        <h3><i class="ti-email"></i> Messages</h3>
+                        <p>Your recent conversations</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5>Inbox</h5>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button class="btn_1 btn-sm">New Message</button>
+                                </div>
+                            </div>
+
+                            <div id="messages-list">
+                                <!-- Messages will be loaded here -->
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">
+                                        <i class="ti-email"></i>
+                                    </div>
+                                    <h4>No Messages Yet</h4>
+                                    <p>Your messages will appear here when you receive them.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same footer as other pages -->
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Load current user data
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Set user info (same as settings.html)
+            // ...
+
+            // Sample messages data
+            const messages = [
+                {
+                    id: 1,
+                    from: 'support@wyattacademy.com',
+                    fromName: 'Support Team',
+                    subject: 'Welcome to Wyatt Academy',
+                    content: 'Thank you for joining Wyatt Academy! We\'re excited to have you as a student.',
+                    date: '2023-06-01T10:30:00',
+                    read: true
+                },
+                {
+                    id: 2,
+                    from: 'instructor@wyattacademy.com',
+                    fromName: 'John Smith',
+                    subject: 'Your course progress',
+                    content: 'I noticed you\'ve made great progress in the course. Keep up the good work!',
+                    date: '2023-06-05T14:15:00',
+                    read: false
+                }
+            ];
+
+            // Display messages
+            const messagesList = $('#messages-list');
+            if (messages.length > 0) {
+                messagesList.empty();
+                messages.forEach(message => {
+                    const messageCard = `
+                        <div class="card message-card ${message.read ? '' : 'message-unread'}">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-2">
+                                        <img src="img/profile_placeholder.jpg" class="message-avatar">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>${message.fromName}</h6>
+                                        <p class="mb-0">${message.subject}</p>
+                                        <small class="text-muted">${message.content.substring(0, 50)}...</small>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <small class="text-muted">${new Date(message.date).toLocaleDateString()}</small>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    messagesList.append(messageCard);
+                });
+            }
+
+            // Logout functionality
+            $('#logout-btn, #sidebar-logout').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

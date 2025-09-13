@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyatt Academy - Certificate Generator</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+            --sidebar-width: 240px;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f8fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: var(--sidebar-width);
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+            background-color: white;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+        }
+
+        .card-admin {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+
+        .card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .certificate-preview {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate {
+            width: 100%;
+            aspect-ratio: 1.414;
+            background: white;
+            border: 20px solid #2c3e50;
+            position: relative;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            border: 3px solid var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .certificate-header {
+            margin-bottom: 30px;
+            z-index: 1;
+        }
+
+        .certificate-title {
+            font-size: 48px;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .certificate-subtitle {
+            font-size: 20px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .certificate-body {
+            margin-bottom: 40px;
+            z-index: 1;
+        }
+
+        .certificate-text {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .recipient-name {
+            font-size: 36px;
+            color: #2c3e50;
+            font-weight: bold;
+            margin: 20px 0;
+            text-decoration: underline;
+            text-decoration-color: var(--primary-color);
+        }
+
+        .course-name {
+            font-size: 24px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 40px;
+            z-index: 1;
+        }
+
+        .signature-section {
+            text-align: center;
+            flex: 1;
+        }
+
+        .signature-line {
+            border-bottom: 2px solid #2c3e50;
+            width: 200px;
+            margin: 0 auto 10px;
+        }
+
+        .signature-label {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .decorative-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+        }
+
+        .decorative-element.top-left {
+            top: 80px;
+            left: 80px;
+        }
+
+        .decorative-element.top-right {
+            top: 80px;
+            right: 80px;
+        }
+
+        .decorative-element.bottom-left {
+            bottom: 80px;
+            left: 80px;
+        }
+
+        .decorative-element.bottom-right {
+            bottom: 80px;
+            right: 80px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .certificate {
+                padding: 30px;
+            }
+
+            .certificate-title {
+                font-size: 32px;
+            }
+
+            .recipient-name {
+                font-size: 24px;
+            }
+
+            .course-name {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="" alt="Profile" class="admin-profile-img" id="admin-profile-pic">
+                        <span id="admin-name">Admin User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="ti-settings mr-2"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="admin-logout-btn"><i class="ti-power-off mr-2"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="text-center py-4">
+            <img src="img/logo-white.png" alt="Wyatt Academy Logo" width="160">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="admin-dashboard.html">
+                    <i class="ti-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-users.html">
+                    <i class="ti-user"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-courses.html">
+                    <i class="ti-book"></i> Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="certificate.html">
+                    <i class="ti-medall"></i> Certificates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-payments.html">
+                    <i class="ti-wallet"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-settings.html">
+                    <i class="ti-settings"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Certificate Generator</h2>
+                <div class="text-muted">Create and manage certificates</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Certificate Details</h5>
+                            <form id="certificateForm">
+                                <div class="form-group">
+                                    <label for="recipientName">Recipient Name</label>
+                                    <input type="text" class="form-control" id="recipientName"
+                                        placeholder="Enter full name" value="John Smith">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="courseName">Course/Achievement</label>
+                                    <input type="text" class="form-control" id="courseName"
+                                        placeholder="Enter course or achievement" value="Web Development Fundamentals">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="completionDate">Completion Date</label>
+                                    <input type="date" class="form-control" id="completionDate" value="2024-01-15">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="instructorName">Instructor/Authority</label>
+                                    <input type="text" class="form-control" id="instructorName"
+                                        placeholder="Enter instructor name" value="Dr. Sarah Johnson">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="organizationName">Organization</label>
+                                    <input type="text" class="form-control" id="organizationName"
+                                        placeholder="Enter organization name" value="Wyatt Academy">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="certificateType">Certificate Type</label>
+                                    <select class="form-control" id="certificateType">
+                                        <option value="completion">Certificate of Completion</option>
+                                        <option value="achievement">Certificate of Achievement</option>
+                                        <option value="participation">Certificate of Participation</option>
+                                        <option value="excellence">Certificate of Excellence</option>
+                                    </select>
+                                </div>
+
+                                <button type="button" class="btn btn-primary btn-block" onclick="generateCertificate()">
+                                    <i class="ti-reload mr-2"></i> Generate Certificate
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card-admin">
+                        <div class="certificate-preview">
+                            <div class="certificate" id="certificate">
+                                <!-- Decorative elements -->
+                                <svg class="decorative-element top-left" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" fill="var(--primary-color)" />
+                                    <circle cx="50" cy="50" r="25" fill="white" />
+                                </svg>
+
+                                <svg class="decorative-element top-right" viewBox="0 0 100 100">
+                                    <polygon points="50,10 90,90 10,90" fill="var(--secondary-color)" />
+                                    <polygon points="50,30 70,70 30,70" fill="white" />
+                                </svg>
+
+                                <svg class="decorative-element bottom-left" viewBox="0 0 100 100">
+                                    <rect x="20" y="20" width="60" height="60" fill="#f39c12"
+                                        transform="rotate(45 50 50)" />
+                                    <rect x="35" y="35" width="30" height="30" fill="white"
+                                        transform="rotate(45 50 50)" />
+                                </svg>
+
+                                <svg class="decorative-element bottom-right" viewBox="0 0 100 100">
+                                    <polygon points="50,20 80,80 20,80" fill="#9b59b6" />
+                                    <polygon points="50,35 65,65 35,65" fill="white" />
+                                </svg>
+
+                                <div class="certificate-header">
+                                    <div class="certificate-title" id="certTitle">Certificate of Completion</div>
+                                    <div class="certificate-subtitle">This is to certify that</div>
+                                </div>
+
+                                <div class="certificate-body">
+                                    <div class="recipient-name" id="displayName">John Smith</div>
+                                    <div class="certificate-text">has successfully completed the course</div>
+                                    <div class="course-name" id="displayCourse">Web Development Fundamentals</div>
+                                    <div class="certificate-text">and has demonstrated proficiency in the subject matter
+                                    </div>
+                                </div>
+
+                                <div class="certificate-footer">
+                                    <div class="signature-section">
+                                        <div class="signature-line"></div>
+                                        <div class="signature-label" id="displayInstructor">Dr. Sarah Johnson</div>
+                                        <div class="signature-label">Instructor</div>
+                                    </div>
+
+                                    <div class="date-section">
+                                        <div class="signature-line"></div>
+                                        <div class="signature-label" id="displayDate">January 15, 2024</div>
+                                        <div class="signature-label">Date</div>
+                                    </div>
+                                </div>
+
+                                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 14px; color: #7f8c8d;"
+                                    id="displayOrganization">Wyatt Academy</div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-download" onclick="downloadCertificate()">
+                                    <i class="ti-download mr-2"></i> Download PDF
+                                </button>
+                                <button class="btn btn-print" onclick="printCertificate()">
+                                    <i class="ti-printer mr-2"></i> Print Certificate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get admin data from localStorage
+            const currentAdmin = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Admin",
+                lastName: "User",
+                email: "admin@wyattacademy.com",
+                profilePicture: ""
+            };
+
+            // Set admin name and profile picture
+            $('#admin-name').text(`${currentAdmin.firstName} ${currentAdmin.lastName}`);
+            if (currentAdmin.profilePicture) {
+                $('#admin-profile-pic').attr('src', currentAdmin.profilePicture);
+            } else {
+                const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                $('#admin-profile-pic').attr('src', blankAvatar);
+            }
+
+            // Logout functionality
+            $('#admin-logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            // Auto-generate on page load
+            generateCertificate();
+
+            // Auto-update when typing
+            $('#recipientName, #courseName, #instructorName, #organizationName').on('input', generateCertificate);
+            $('#completionDate, #certificateType').on('change', generateCertificate);
+        });
+
+        function generateCertificate() {
+            // Get form values
+            const recipientName = $('#recipientName').val() || 'Recipient Name';
+            const courseName = $('#courseName').val() || 'Course Name';
+            const completionDate = $('#completionDate').val();
+            const instructorName = $('#instructorName').val() || 'Instructor Name';
+            const organizationName = $('#organizationName').val() || 'Organization';
+            const certificateType = $('#certificateType').val();
+
+            // Format date
+            let formattedDate = 'Date';
+            if (completionDate) {
+                const date = new Date(completionDate);
+                formattedDate = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+
+            // Update certificate type title
+            const typeMap = {
+                'completion': 'Certificate of Completion',
+                'achievement': 'Certificate of Achievement',
+                'participation': 'Certificate of Participation',
+                'excellence': 'Certificate of Excellence'
+            };
+
+            // Update certificate content
+            $('#certTitle').text(typeMap[certificateType]);
+            $('#displayName').text(recipientName);
+            $('#displayCourse').text(courseName);
+            $('#displayInstructor').text(instructorName);
+            $('#displayDate').text(formattedDate);
+            $('#displayOrganization').text(organizationName);
+        }
+
+        function downloadCertificate() {
+            // In a real implementation, you would use html2canvas and jsPDF libraries
+            alert('In a real implementation, this would download the certificate as a PDF. For this demo, please use the print function instead.');
+        }
+
+        function printCertificate() {
+            // Create a print-friendly version of the certificate
+            const printWindow = window.open('', '', 'width=800,height=600');
+            const certificateContent = $('#certificate').html();
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Certificate - Print</title>
+                    <style>
+                        body { margin: 0; padding: 0; }
+                        .certificate {
+                            width: 100%;
+                            height: 100vh;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            text-align: center;
+                            padding: 60px;
+                            box-sizing: border-box;
+                        }
+                        .certificate-title {
+                            font-size: 48px;
+                            color: #4f46e5;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        .recipient-name {
+                            font-size: 36px;
+                            color: #2c3e50;
+                            font-weight: bold;
+                            margin: 20px 0;
+                            text-decoration: underline;
+                            text-decoration-color: #4f46e5;
+                        }
+                        .course-name {
+                            font-size: 24px;
+                            color: #7c3aed;
+                            font-weight: bold;
+                            margin: 20px 0;
+                        }
+                        @media print {
+                            @page { size: landscape; margin: 0; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="certificate">
+                        ${certificateContent}
+                    </div>
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                            setTimeout(function() {
+                                window.close();
+                            }, 1000);
+                        };
+    </script>
+</body>
+
+</html>
+`);
+printWindow.document.close();
+}
+</script>
+</body>
+
+</html>

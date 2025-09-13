@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Users Management</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 240px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+            background-color: white;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .card-admin {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-responsive {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .badge-premium {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-pro {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .badge-free {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box .form-control {
+            padding-left: 40px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="" alt="Profile" class="admin-profile-img" id="admin-profile-pic">
+                        <span id="admin-name">Admin User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="ti-settings mr-2"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="admin-logout-btn"><i class="ti-power-off mr-2"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="text-center py-4">
+            <img src="img/logo.png" alt="Wyatt Academy Logo" width="160">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="admin-dashboard.html">
+                    <i class="ti-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="admin-users.html">
+                    <i class="ti-user"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-courses.html">
+                    <i class="ti-book"></i> Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-certificates.html">
+                    <i class="ti-medall"></i> Certificates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-payments.html">
+                    <i class="ti-wallet"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-settings.html">
+                    <i class="ti-settings"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Users Management</h2>
+                <button class="btn_1" data-toggle="modal" data-target="#addUserModal">
+                    <i class="ti-plus mr-2"></i> Add New User
+                </button>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="search-box">
+                        <i class="ti-search"></i>
+                        <input type="text" class="form-control" placeholder="Search users..." id="userSearch">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Plan</th>
+                                            <th>Status</th>
+                                            <th>Joined</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="users-table">
+                                        <!-- Users will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center mt-3">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPlan">Plan</label>
+                            <select class="form-control" id="userPlan">
+                                <option value="free">Free</option>
+                                <option value="pro">Pro</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userStatus">Status</label>
+                            <select class="form-control" id="userStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn_1" id="saveUser">Save User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <input type="hidden" id="editUserId">
+                        <div class="form-group">
+                            <label for="editFirstName">First Name</label>
+                            <input type="text" class="form-control" id="editFirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editLastName">Last Name</label>
+                            <input type="text" class="form-control" id="editLastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="email" class="form-control" id="editEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editPlan">Plan</label>
+                            <select class="form-control" id="editPlan">
+                                <option value="free">Free</option>
+                                <option value="pro">Pro</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editStatus">Status</label>
+                            <select class="form-control" id="editStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn_1" id="updateUser">Update User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get admin data from localStorage
+            const currentAdmin = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Admin",
+                lastName: "User",
+                email: "admin@wyattacademy.com",
+                profilePicture: ""
+            };
+
+            // Initialize admin dashboard
+            initAdminDashboard();
+
+            function initAdminDashboard() {
+                // Set admin name and profile picture
+                $('#admin-name').text(`${currentAdmin.firstName} ${currentAdmin.lastName}`);
+                if (currentAdmin.profilePicture) {
+                    $('#admin-profile-pic').attr('src', currentAdmin.profilePicture);
+                } else {
+                    const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                    $('#admin-profile-pic').attr('src', blankAvatar);
+                }
+
+                // Load users data
+                loadUsersData();
+            }
+
+            function loadUsersData() {
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+
+                // Populate users table
+                const usersTable = $('#users-table');
+                usersTable.empty();
+
+                users.forEach(user => {
+                    let statusBadge;
+                    if (user.status === 'active') {
+                        statusBadge = '<span class="badge badge-success">Active</span>';
+                    } else if (user.status === 'inactive') {
+                        statusBadge = '<span class="badge badge-secondary">Inactive</span>';
+                    } else {
+                        statusBadge = '<span class="badge badge-danger">Suspended</span>';
+                    }
+
+                    let planBadge;
+                    if (user.subscriptionPlan === 'premium') {
+                        planBadge = '<span class="badge badge-premium">Premium</span>';
+                    } else if (user.subscriptionPlan === 'pro') {
+                        planBadge = '<span class="badge badge-pro">Pro</span>';
+                    } else {
+                        planBadge = '<span class="badge badge-free">Free</span>';
+                    }
+
+                    const userRow = `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>
+                                <img src="${user.profilePicture || 'img/profile_placeholder.jpg'}" class="admin-profile-img">
+                                ${user.firstName} ${user.lastName}
+                            </td>
+                            <td>${user.email}</td>
+                            <td>${planBadge}</td>
+                            <td>${statusBadge}</td>
+                            <td>${new Date(user.joinDate).toLocaleDateString()}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary edit-user" data-id="${user.id}">
+                                    <i class="ti-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-user" data-id="${user.id}">
+                                    <i class="ti-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    usersTable.append(userRow);
+                });
+
+                // Edit user button handler
+                $(document).on('click', '.edit-user', function () {
+                    const userId = $(this).data('id');
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    const user = users.find(u => u.id === userId);
+
+                    if (user) {
+                        $('#editUserId').val(user.id);
+                        $('#editFirstName').val(user.firstName);
+                        $('#editLastName').val(user.lastName);
+                        $('#editEmail').val(user.email);
+                        $('#editPlan').val(user.subscriptionPlan || 'free');
+                        $('#editStatus').val(user.status || 'active');
+                        $('#editUserModal').modal('show');
+                    }
+                });
+
+                // Delete user button handler
+                $(document).on('click', '.delete-user', function () {
+                    const userId = $(this).data('id');
+                    if (confirm('Are you sure you want to delete this user?')) {
+                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const updatedUsers = users.filter(user => user.id !== userId);
+                        localStorage.setItem('users', JSON.stringify(updatedUsers));
+                        $(this).closest('tr').remove();
+                        alert('User deleted successfully');
+                    }
+                });
+            }
+
+            // Save new user
+            $('#saveUser').click(function () {
+                const firstName = $('#firstName').val().trim();
+                const lastName = $('#lastName').val().trim();
+                const email = $('#email').val().trim();
+                const password = $('#password').val();
+                const plan = $('#userPlan').val();
+                const status = $('#userStatus').val();
+
+                if (!firstName || !lastName || !email || !password) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                // Check if email already exists
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const emailExists = users.some(user => user.email === email);
+
+                if (emailExists) {
+                    alert('This email is already registered');
+                    return;
+                }
+
+                // Create new user
+                const newUser = {
+                    id: 'user_' + Math.random().toString(36).substr(2, 9),
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    profilePicture: '',
+                    role: 'student',
+                    joinDate: new Date().toISOString(),
+                    courses: [],
+                    subscriptionPlan: plan,
+                    status: status,
+                    phone: '',
+                    location: '',
+                    bio: ''
+                };
+
+                // Save user
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+
+                $('#addUserModal').modal('hide');
+                $('#addUserForm')[0].reset();
+                loadUsersData();
+                alert('User created successfully');
+            });
+
+            // Update user
+            $('#updateUser').click(function () {
+                const userId = $('#editUserId').val();
+                const firstName = $('#editFirstName').val().trim();
+                const lastName = $('#editLastName').val().trim();
+                const email = $('#editEmail').val().trim();
+                const plan = $('#editPlan').val();
+                const status = $('#editStatus').val();
+
+                if (!firstName || !lastName || !email) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                // Update user in localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(user => user.id === userId);
+
+                if (userIndex !== -1) {
+                    users[userIndex] = {
+                        ...users[userIndex],
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        subscriptionPlan: plan,
+                        status: status
+                    };
+
+                    localStorage.setItem('users', JSON.stringify(users));
+                    $('#editUserModal').modal('hide');
+                    loadUsersData();
+                    alert('User updated successfully');
+                }
+            });
+
+            // User search functionality
+            $('#userSearch').on('keyup', function () {
+                const value = $(this).val().toLowerCase();
+                $('#users-table tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // Logout functionality
+            $('#admin-logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

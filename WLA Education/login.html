@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Login</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .auth-container {
+            max-width: 450px;
+            margin: 80px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            background: white;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .is-invalid {
+            border-color: var(--danger-color);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .auth-toggle a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="register.html">Register</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Welcome Back!</h2>
+                    <p>Login to continue your learning journey</p>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me">
+                        <label class="form-check-label" for="remember-me">Remember me</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-auth">
+                        <span id="submit-text">Login</span>
+                        <span id="submit-spinner" class="spinner-border spinner-border-sm d-none"></span>
+                    </button>
+                </form>
+
+                <div class="auth-toggle">
+                    <p>Don't have an account? <a href="register.html">Sign up here</a></p>
+                    <p><a href="forgot-password.html">Forgot your password?</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"> </a>
+                        <p>Committed to excellence in education since 2010, Wyatt Academy provides quality learning
+                            experiences for students of all ages.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses and learning tips</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-linkedin"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 123 Education Street, Mandalay, Myanmar</p>
+                            <p><span> Phone :</span> +959 123 456 789</p>
+                            <p><span> Email : </span>info@wyattacademy.edu.mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Check for remembered email
+            if (localStorage.getItem('rememberEmail')) {
+                $('#email').val(localStorage.getItem('rememberEmail'));
+                $('#remember-me').prop('checked', true);
+            }
+
+            $('#login-form').submit(function (e) {
+                e.preventDefault();
+                $('.error-message').hide();
+                $('.is-invalid').removeClass('is-invalid');
+
+                // Get form values
+                const email = $('#email').val().trim();
+                const password = $('#password').val();
+                const rememberMe = $('#remember-me').is(':checked');
+
+                // Validate inputs
+                let isValid = true;
+
+                if (!email) {
+                    $('#email').addClass('is-invalid');
+                    $('#email-error').text('Email is required').show();
+                    isValid = false;
+                }
+
+                if (!password) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-error').text('Password is required').show();
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                // Show loading state
+                $('#submit-text').text('Logging in...');
+                $('#submit-spinner').removeClass('d-none');
+
+                // Check credentials
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    // Remember email if checkbox is checked
+                    if (rememberMe) {
+                        localStorage.setItem('rememberEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberEmail');
+                    }
+
+                    // Set current user
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+
+                    // Redirect based on role
+                    setTimeout(() => {
+                        if (user.role === 'admin') {
+                            window.location.href = 'admin-dashboard.html';
+                        } else {
+                            window.location.href = 'dashboard.html';
+                        }
+                    }, 1000);
+                } else {
+                    $('#password').addClass('is-invalid');
+                    $('#password-error').text('Invalid email or password').show();
+                    $('#submit-text').text('Login');
+                    $('#submit-spinner').addClass('d-none');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

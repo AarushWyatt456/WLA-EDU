@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Admin Settings</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+        }
+
+        body {
+            background-color: #f8fafc;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 240px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+            background-color: white;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .card-admin {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+
+        .card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .settings-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-check {
+            margin-bottom: 1rem;
+        }
+
+        .form-check-input {
+            width: 1.25em;
+            height: 1.25em;
+            margin-top: 0.15em;
+            margin-right: 0.5em;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            color: #4a5568;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-tabs .nav-link {
+            color: #4a5568;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            margin-right: 0.5rem;
+        }
+
+        .settings-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        .settings-tabs .nav-link:hover:not(.active) {
+            background-color: #f8fafc;
+        }
+
+        .logo-preview {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .theme-color-option {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .theme-color-option:hover {
+            background-color: #f8fafc;
+        }
+
+        .theme-color-option input {
+            margin-right: 10px;
+        }
+
+        .theme-color-name {
+            font-weight: 500;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="" alt="Profile" class="admin-profile-img" id="admin-profile-pic">
+                        <span id="admin-name">Admin User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="ti-settings mr-2"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="admin-logout-btn"><i class="ti-power-off mr-2"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="text-center py-4">
+            <img src="img/logo-white.png" alt="Wyatt Academy Logo" width="160">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="admin-dashboard.html">
+                    <i class="ti-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-users.html">
+                    <i class="ti-user"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-courses.html">
+                    <i class="ti-book"></i> Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="certificate.html">
+                    <i class="ti-medall"></i> Certificates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-payments.html">
+                    <i class="ti-wallet"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="admin-settings.html">
+                    <i class="ti-settings"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>System Settings</h2>
+                <div class="text-muted">Configure platform settings</div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <ul class="nav flex-column settings-tabs" id="settingsTabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general"
+                                        role="tab">
+                                        <i class="ti-settings mr-2"></i> General
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="appearance-tab" data-toggle="tab" href="#appearance"
+                                        role="tab">
+                                        <i class="ti-paint-bucket mr-2"></i> Appearance
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="email-tab" data-toggle="tab" href="#email" role="tab">
+                                        <i class="ti-email mr-2"></i> Email
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab">
+                                        <i class="ti-credit-card mr-2"></i> Payments
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="security-tab" data-toggle="tab" href="#security" role="tab">
+                                        <i class="ti-lock mr-2"></i> Security
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="maintenance-tab" data-toggle="tab" href="#maintenance"
+                                        role="tab">
+                                        <i class="ti-server mr-2"></i> Maintenance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <div class="tab-content" id="settingsTabContent">
+                                <!-- General Settings Tab -->
+                                <div class="tab-pane fade show active" id="general" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Platform Information</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="platformName">Platform Name</label>
+                                                    <input type="text" class="form-control" id="platformName"
+                                                        value="Wyatt Academy">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="platformEmail">Contact Email</label>
+                                                    <input type="email" class="form-control" id="platformEmail"
+                                                        value="contact@wyattacademy.com">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="platformDescription">Platform Description</label>
+                                            <textarea class="form-control" id="platformDescription"
+                                                rows="3">Premium online learning platform for professional development</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Logo & Favicon</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Logo</label>
+                                                    <div class="logo-preview">
+                                                        <img src="img/logo.png" alt="Current Logo" id="logoPreview">
+                                                    </div>
+                                                    <input type="file" class="form-control" id="logoUpload"
+                                                        accept="image/*">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Favicon</label>
+                                                    <div class="logo-preview" style="width: 80px; height: 80px;">
+                                                        <img src="img/favicon.png" alt="Current Favicon"
+                                                            id="faviconPreview">
+                                                    </div>
+                                                    <input type="file" class="form-control" id="faviconUpload"
+                                                        accept="image/*">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Time & Language</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="timezone">Timezone</label>
+                                                    <select class="form-select" id="timezone">
+                                                        <option value="UTC-12">UTC-12:00</option>
+                                                        <option value="UTC-5" selected>UTC-05:00 (Eastern Time)</option>
+                                                        <option value="UTC-6">UTC-06:00 (Central Time)</option>
+                                                        <option value="UTC-7">UTC-07:00 (Mountain Time)</option>
+                                                        <option value="UTC-8">UTC-08:00 (Pacific Time)</option>
+                                                        <option value="UTC">UTC±00:00 (GMT)</option>
+                                                        <option value="UTC+1">UTC+01:00 (CET)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="language">Default Language</label>
+                                                    <select class="form-select" id="language">
+                                                        <option value="en" selected>English</option>
+                                                        <option value="es">Spanish</option>
+                                                        <option value="fr">French</option>
+                                                        <option value="de">German</option>
+                                                        <option value="zh">Chinese</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Appearance Settings Tab -->
+                                <div class="tab-pane fade" id="appearance" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Theme Colors</h4>
+                                        <div class="form-group">
+                                            <div class="theme-color-option">
+                                                <input type="radio" id="theme-purple" name="themeColor" value="purple"
+                                                    checked>
+                                                <div class="color-preview"
+                                                    style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+                                                </div>
+                                                <span class="theme-color-name">Purple Gradient</span>
+                                            </div>
+                                            <div class="theme-color-option">
+                                                <input type="radio" id="theme-blue" name="themeColor" value="blue">
+                                                <div class="color-preview"
+                                                    style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                                                </div>
+                                                <span class="theme-color-name">Blue Gradient</span>
+                                            </div>
+                                            <div class="theme-color-option">
+                                                <input type="radio" id="theme-green" name="themeColor" value="green">
+                                                <div class="color-preview"
+                                                    style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                                </div>
+                                                <span class="theme-color-name">Green Gradient</span>
+                                            </div>
+                                            <div class="theme-color-option">
+                                                <input type="radio" id="theme-red" name="themeColor" value="red">
+                                                <div class="color-preview"
+                                                    style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                                </div>
+                                                <span class="theme-color-name">Red Gradient</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Layout Options</h4>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="fixedHeader" checked>
+                                            <label class="form-check-label" for="fixedHeader">Fixed Header</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="fixedSidebar" checked>
+                                            <label class="form-check-label" for="fixedSidebar">Fixed Sidebar</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="compactSidebar">
+                                            <label class="form-check-label" for="compactSidebar">Compact Sidebar</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email Settings Tab -->
+                                <div class="tab-pane fade" id="email" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Email Configuration</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mailDriver">Mail Driver</label>
+                                                    <select class="form-select" id="mailDriver">
+                                                        <option value="smtp" selected>SMTP</option>
+                                                        <option value="mailgun">Mailgun</option>
+                                                        <option value="sendmail">Sendmail</option>
+                                                        <option value="mail">PHP Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mailFromAddress">From Address</label>
+                                                    <input type="email" class="form-control" id="mailFromAddress"
+                                                        value="noreply@wyattacademy.com">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mailHost">SMTP Host</label>
+                                                    <input type="text" class="form-control" id="mailHost"
+                                                        value="smtp.mailtrap.io">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="mailPort">SMTP Port</label>
+                                                    <input type="number" class="form-control" id="mailPort"
+                                                        value="2525">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="mailEncryption">Encryption</label>
+                                                    <select class="form-select" id="mailEncryption">
+                                                        <option value="tls" selected>TLS</option>
+                                                        <option value="ssl">SSL</option>
+                                                        <option value="">None</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mailUsername">SMTP Username</label>
+                                                    <input type="text" class="form-control" id="mailUsername"
+                                                        value="your_username">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mailPassword">SMTP Password</label>
+                                                    <input type="password" class="form-control" id="mailPassword"
+                                                        value="your_password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Email Templates</h4>
+                                        <div class="form-group">
+                                            <label for="welcomeEmail">Welcome Email Template</label>
+                                            <select class="form-select" id="welcomeEmail">
+                                                <option value="default" selected>Default Template</option>
+                                                <option value="modern">Modern Template</option>
+                                                <option value="minimal">Minimal Template</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="passwordResetEmail">Password Reset Template</label>
+                                            <select class="form-select" id="passwordResetEmail">
+                                                <option value="default" selected>Default Template</option>
+                                                <option value="modern">Modern Template</option>
+                                                <option value="minimal">Minimal Template</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Payment Settings Tab -->
+                                <div class="tab-pane fade" id="payment" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Payment Gateway</h4>
+                                        <div class="form-group">
+                                            <label for="paymentGateway">Default Payment Gateway</label>
+                                            <select class="form-select" id="paymentGateway">
+                                                <option value="stripe" selected>Stripe</option>
+                                                <option value="paypal">PayPal</option>
+                                                <option value="razorpay">Razorpay</option>
+                                                <option value="offline">Offline Payment</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Stripe Configuration</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="stripeKey">Publishable Key</label>
+                                                    <input type="text" class="form-control" id="stripeKey"
+                                                        value="pk_test_your_key">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="stripeSecret">Secret Key</label>
+                                                    <input type="password" class="form-control" id="stripeSecret"
+                                                        value="sk_test_your_secret">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="stripeWebhook">Webhook Secret</label>
+                                            <input type="password" class="form-control" id="stripeWebhook"
+                                                value="whsec_your_webhook_secret">
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Currency Settings</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="currency">Default Currency</label>
+                                                    <select class="form-select" id="currency">
+                                                        <option value="USD" selected>US Dollar (USD)</option>
+                                                        <option value="EUR">Euro (EUR)</option>
+                                                        <option value="GBP">British Pound (GBP)</option>
+                                                        <option value="INR">Indian Rupee (INR)</option>
+                                                        <option value="AUD">Australian Dollar (AUD)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="currencyPosition">Currency Position</label>
+                                                    <select class="form-select" id="currencyPosition">
+                                                        <option value="left" selected>Left ($99)</option>
+                                                        <option value="right">Right (99$)</option>
+                                                        <option value="left_space">Left with space ($ 99)</option>
+                                                        <option value="right_space">Right with space (99 $)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Security Settings Tab -->
+                                <div class="tab-pane fade" id="security" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Authentication</h4>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="emailVerification"
+                                                checked>
+                                            <label class="form-check-label" for="emailVerification">Require Email
+                                                Verification</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="recaptcha">
+                                            <label class="form-check-label" for="recaptcha">Enable reCAPTCHA</label>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="recaptchaSiteKey">reCAPTCHA Site Key</label>
+                                                    <input type="text" class="form-control" id="recaptchaSiteKey"
+                                                        placeholder="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="recaptchaSecretKey">reCAPTCHA Secret Key</label>
+                                                    <input type="password" class="form-control" id="recaptchaSecretKey"
+                                                        placeholder="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Password Policy</h4>
+                                        <div class="form-group">
+                                            <label for="passwordLength">Minimum Password Length</label>
+                                            <input type="number" class="form-control" id="passwordLength" value="8"
+                                                min="6" max="32">
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="requireMixedCase"
+                                                checked>
+                                            <label class="form-check-label" for="requireMixedCase">Require mixed case
+                                                (Aa)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="requireNumbers" checked>
+                                            <label class="form-check-label" for="requireNumbers">Require numbers
+                                                (0-9)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="requireSymbols">
+                                            <label class="form-check-label" for="requireSymbols">Require symbols
+                                                (!@#)</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Maintenance Settings Tab -->
+                                <div class="tab-pane fade" id="maintenance" role="tabpanel">
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Maintenance Mode</h4>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="maintenanceMode">
+                                            <label class="form-check-label" for="maintenanceMode">Enable Maintenance
+                                                Mode</label>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="maintenanceMessage">Maintenance Message</label>
+                                            <textarea class="form-control" id="maintenanceMessage"
+                                                rows="3">We're currently performing scheduled maintenance. We'll be back shortly. Thank you for your patience.</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="allowedIPs">Allowed IP Addresses (comma separated)</label>
+                                            <input type="text" class="form-control" id="allowedIPs"
+                                                placeholder="192.168.1.1, 203.0.113.42">
+                                        </div>
+                                    </div>
+
+                                    <div class="settings-section">
+                                        <h4 class="settings-section-title">Backup Configuration</h4>
+                                        <div class="form-group">
+                                            <label for="backupFrequency">Backup Frequency</label>
+                                            <select class="form-select" id="backupFrequency">
+                                                <option value="daily" selected>Daily</option>
+                                                <option value="weekly">Weekly</option>
+                                                <option value="monthly">Monthly</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="backupDatabase" checked>
+                                            <label class="form-check-label" for="backupDatabase">Backup Database</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="backupFiles">
+                                            <label class="form-check-label" for="backupFiles">Backup Files</label>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <button class="btn btn-save">
+                                                <i class="ti-save mr-2"></i> Create Backup Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button class="btn btn-reset">
+                                    <i class="ti-reload mr-2"></i> Reset Changes
+                                </button>
+                                <button class="btn btn-save">
+                                    <i class="ti-save mr-2"></i> Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get admin data from localStorage
+            const currentAdmin = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Admin",
+                lastName: "User",
+                email: "admin@wyattacademy.com",
+                profilePicture: ""
+            };
+
+            // Set admin name and profile picture
+            $('#admin-name').text(`${currentAdmin.firstName} ${currentAdmin.lastName}`);
+            if (currentAdmin.profilePicture) {
+                $('#admin-profile-pic').attr('src', currentAdmin.profilePicture);
+            } else {
+                const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                $('#admin-profile-pic').attr('src', blankAvatar);
+            }
+
+            // Logout functionality
+            $('#admin-logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            // Preview logo when selected
+            $('#logoUpload').change(function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        $('#logoPreview').attr('src', event.target.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Preview favicon when selected
+            $('#faviconUpload').change(function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        $('#faviconPreview').attr('src', event.target.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Save settings
+            $('.btn-save').click(function () {
+                // In a real implementation, this would save to your backend
+                alert('Settings saved successfully!');
+            });
+
+            // Reset changes
+            $('.btn-reset').click(function () {
+                if (confirm('Are you sure you want to reset all changes?')) {
+                    // In a real implementation, this would reload from your backend
+                    location.reload();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

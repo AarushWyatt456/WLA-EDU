@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Certificates Management</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 240px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+            background-color: white;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .card-admin {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-responsive {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .certificate-item {
+            border-left: 4px solid #4f46e5;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="" alt="Profile" class="admin-profile-img" id="admin-profile-pic">
+                        <span id="admin-name">Admin User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="ti-settings mr-2"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="admin-logout-btn"><i class="ti-power-off mr-2"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="text-center py-4">
+            <img src="img/logo.png" alt="Wyatt Academy Logo" width="160">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="admin-dashboard.html">
+                    <i class="ti-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-users.html">
+                    <i class="ti-user"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-courses.html">
+                    <i class="ti-book"></i> Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="admin-certificates.html">
+                    <i class="ti-medall"></i> Certificates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-payments.html">
+                    <i class="ti-wallet"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-settings.html">
+                    <i class="ti-settings"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <h2 class="mb-4">Certificates Management</h2>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Certificate ID</th>
+                                            <th>Course</th>
+                                            <th>Student</th>
+                                            <th>Issued On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="certificates-table">
+                                        <tr class="certificate-item">
+                                            <td>CERT-001</td>
+                                            <td>Java Programming</td>
+                                            <td>John Doe</td>
+                                            <td>05/15/2023</td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                                    <i class="ti-download"></i> Download
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="ti-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="certificate-item">
+                                            <td>CERT-002</td>
+                                            <td>Python Fundamentals</td>
+                                            <td>Jane Smith</td>
+                                            <td>05/18/2023</td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                                    <i class="ti-download"></i> Download
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="ti-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="certificate-item">
+                                            <td>CERT-003</td>
+                                            <td>Web Development</td>
+                                            <td>Alice Williams</td>
+                                            <td>05/20/2023</td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                                    <i class="ti-download"></i> Download
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="ti-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <h5 class="card-title">Issue New Certificate</h5>
+                            <form id="issueCertificateForm">
+                                <div class="form-group">
+                                    <label>Student</label>
+                                    <select class="form-control">
+                                        <option>Select student</option>
+                                        <option>John Doe</option>
+                                        <option>Jane Smith</option>
+                                        <option>Bob Johnson</option>
+                                        <option>Alice Williams</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Course</label>
+                                    <select class="form-control">
+                                        <option>Select course</option>
+                                        <option>Java Programming</option>
+                                        <option>Python Fundamentals</option>
+                                        <option>Web Development</option>
+                                        <option>Data Science Intro</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Issue Date</label>
+                                    <input type="date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                                <button type="submit" class="btn_1 btn-block">Issue Certificate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get admin data from localStorage
+            const currentAdmin = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Admin",
+                lastName: "User",
+                email: "admin@wyattacademy.com",
+                profilePicture: ""
+            };
+
+            // Initialize admin dashboard
+            function initAdminDashboard() {
+                // Set admin name and profile picture
+                $('#admin-name').text(`${currentAdmin.firstName} ${currentAdmin.lastName}`);
+                if (currentAdmin.profilePicture) {
+                    $('#admin-profile-pic').attr('src', currentAdmin.profilePicture);
+                } else {
+                    const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                    $('#admin-profile-pic').attr('src', blankAvatar);
+                }
+            }
+            initAdminDashboard();
+
+            // Issue certificate form
+            $('#issueCertificateForm').submit(function (e) {
+                e.preventDefault();
+                alert('Certificate would be issued here in a real application');
+            });
+
+            // Logout functionality
+            $('#admin-logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

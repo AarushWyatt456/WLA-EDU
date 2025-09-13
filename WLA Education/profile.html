@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - My Profile</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-img-main {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-img-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-img-nav {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .profile-upload-container {
+            position: relative;
+            margin: 0 auto;
+            width: 150px;
+        }
+
+        .profile-upload-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .profile-upload-btn:hover {
+            background: #3a36b5;
+            transform: scale(1.1);
+        }
+
+        .profile-upload-btn i {
+            font-size: 18px;
+        }
+
+        #profile-upload-input {
+            display: none;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            padding: 3rem 0;
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .card-profile {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .card-profile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .nav-pills .nav-link {
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e9ecef;
+        }
+
+        .progress-bar {
+            background-color: #4f46e5;
+            transition: width 0.6s ease;
+        }
+
+        .plan-badge {
+            background-color: #7c3aed;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .course-card {
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-img {
+            height: 120px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4f46e5;
+            margin-bottom: 5px;
+        }
+
+        .stats-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            color: #adb5bd;
+            margin-bottom: 20px;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+        }
+
+        .certificate-card {
+            border: 2px solid #4f46e5;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .certificate-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4f46e5;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .certificate-modal-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="about.html">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="cource.html">Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="blog.html">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="" alt="Profile" class="profile-img-nav" id="nav-profile-pic">
+                                        <span id="nav-user-name">User</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> My
+                                            Profile</a>
+                                        <a class="dropdown-item" href="my-courses.html"><i class="ti-book mr-2"></i> My
+                                            Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout-btn"><i
+                                                class="ti-power-off mr-2"></i> Logout</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="section_padding">
+        <div class="container">
+            <div class="profile-header text-center">
+                <div class="profile-upload-container">
+                    <img src="" alt="Profile" class="profile-img-main mb-3" id="profile-picture">
+                    <div class="profile-upload-btn" id="profile-upload-btn">
+                        <i class="ti-camera"></i>
+                        <input type="file" id="profile-upload-input" accept="image/*">
+                    </div>
+                </div>
+                <h2 id="profile-name">User Name</h2>
+                <p class="mb-0">Member since <span id="join-date">...</span></p>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number" id="courses-count">0</div>
+                        <div class="stats-label">Courses Enrolled</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number" id="completion-rate">0%</div>
+                        <div class="stats-label">Overall Completion</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number" id="active-plan">Free</div>
+                        <div class="stats-label">Current Plan</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card card-profile">
+                        <div class="card-body">
+                            <h4 class="card-title">Personal Information</h4>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><strong>Email:</strong> <span id="profile-email">...</span></li>
+                                <li class="mb-3"><strong>Phone:</strong> <span id="profile-phone">...</span></li>
+                                <li class="mb-3"><strong>Location:</strong> <span id="profile-location">...</span></li>
+                                <li><strong>Bio:</strong>
+                                    <p id="profile-bio" class="mb-0">...</p>
+                                </li>
+                            </ul>
+                            <button class="btn_1 mt-3" data-toggle="modal" data-target="#editProfileModal">Edit
+                                Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="card card-profile mt-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Subscription Plan</h4>
+                            <div id="plan-details">
+                                <!-- Plan details will be loaded here -->
+                            </div>
+                            <a href="pricing.html" class="btn_4 mt-3">Upgrade Plan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card card-profile">
+                        <div class="card-body">
+                            <ul class="nav nav-pills mb-4" id="profile-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="courses-tab" data-toggle="pill" href="#courses"
+                                        role="tab">My Courses</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="certificates-tab" data-toggle="pill" href="#certificates"
+                                        role="tab">Certificates</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="activity-tab" data-toggle="pill" href="#activity"
+                                        role="tab">Activity</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="profile-tabContent">
+                                <div class="tab-pane fade show active" id="courses" role="tabpanel">
+                                    <div class="row" id="courses-container">
+                                        <!-- Courses will be loaded here dynamically -->
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="certificates" role="tabpanel">
+                                    <div class="row" id="certificates-container">
+                                        <!-- Certificates will be loaded here -->
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="activity" role="tabpanel">
+                                    <div id="activity-container">
+                                        <!-- Activity will be loaded here -->
+                                        <div class="empty-state">
+                                            <div class="empty-state-icon">
+                                                <i class="ti-time"></i>
+                                            </div>
+                                            <h4>No Recent Activity</h4>
+                                            <p>Your learning activity will appear here.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="editFirstName">First Name</label>
+                            <input type="text" class="form-control" id="editFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="editLastName">Last Name</label>
+                            <input type="text" class="form-control" id="editLastName">
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="email" class="form-control" id="editEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPhone">Phone</label>
+                            <input type="tel" class="form-control" id="editPhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="editLocation">Location</label>
+                            <input type="text" class="form-control" id="editLocation">
+                        </div>
+                        <div class="form-group">
+                            <label for="editBio">Bio</label>
+                            <textarea class="form-control" id="editBio" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editProfilePicture">Profile Picture</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="editProfilePicture" accept="image/*">
+                            </div>
+                            <small class="form-text text-muted">Upload a new profile picture (max 2MB)</small>
+                        </div>
+                        <div class="text-center">
+                            <img src="" id="profilePicturePreview" class="img-thumbnail mt-2"
+                                style="max-width: 150px; display: none;">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn_1" id="saveProfile">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="modal fade" id="certificateModal" tabindex="-1" role="dialog" aria-labelledby="certificateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="certificateModalLabel">Certificate of Completion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="img/certificate-sample.jpg" alt="Certificate" class="certificate-modal-img mb-3">
+                    <h4 id="certificate-course-name"></h4>
+                    <p>Awarded to: <span id="certificate-user-name"></span></p>
+                    <p>Completed on: <span id="certificate-date"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn_1" id="downloadCertificate">Download Certificate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"> </a>
+                        <p>Committed to excellence in education since 2010, Wyatt Academy provides quality learning
+                            experiences for students of all ages.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses, events, and educational resources.</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-linkedin"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 123 Education Street, Mandalay, Myanmar</p>
+                            <p><span> Phone :</span> +959 123 456 789</p>
+                            <p><span> Email : </span>info@wyattacademy.edu.mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        // Sample data - in a real app, this would come from your database
+        const allCourses = [
+            {
+                id: 'java101',
+                name: 'Java Programming',
+                description: 'Master Java from basics to advanced concepts with hands-on projects.',
+                image: 'img/special_cource_1.png',
+                category: 'Programming'
+            },
+            {
+                id: 'python101',
+                name: 'Python Programming',
+                description: 'Learn Python programming fundamentals and applications.',
+                image: 'img/special_cource_2.png',
+                category: 'Programming'
+            },
+            {
+                id: 'html101',
+                name: 'HTML & CSS Fundamentals',
+                description: 'Build beautiful websites with HTML and CSS.',
+                image: 'img/special_cource_3.png',
+                category: 'Web Development'
+            }
+        ];
+
+        const subscriptionPlans = [
+            {
+                id: 'free',
+                name: 'Free Plan',
+                features: ['Access to basic courses', 'Community support'],
+                price: '$0/month'
+            },
+            {
+                id: 'pro',
+                name: 'Pro Plan',
+                features: ['All courses', 'Certificate upon completion', 'Priority support'],
+                price: '$19/month'
+            },
+            {
+                id: 'premium',
+                name: 'Premium Plan',
+                features: ['All courses', 'Certificates', '1-on-1 mentoring', 'Project reviews'],
+                price: '$49/month'
+            }
+        ];
+
+        $(document).ready(function () {
+            // Get user data from localStorage
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Guest",
+                lastName: "User",
+                email: "guest@example.com",
+                phone: "",
+                location: "",
+                bio: "",
+                profilePicture: "",
+                courses: [
+                    {
+                        id: 'java101',
+                        progress: 100,
+                        completed: true,
+                        completionDate: '2023-05-15'
+                    },
+                    {
+                        id: 'python101',
+                        progress: 50,
+                        completed: false
+                    },
+                    {
+                        id: 'html101',
+                        progress: 80,
+                        completed: false
+                    }
+                ],
+                certificates: [
+                    {
+                        id: 'cert-java-001',
+                        courseId: 'java101',
+                        courseName: 'Java Programming',
+                        date: '2023-05-15',
+                        downloadUrl: '#'
+                    }
+                ],
+                subscriptionPlan: "free",
+                joinDate: new Date().toISOString()
+            };
+
+            // Initialize profile data
+            function initProfileData() {
+                // Basic info
+                $('#profile-name').text(`${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim() || 'User');
+                $('#profile-email').text(currentUser.email || 'Not provided');
+                $('#profile-phone').text(currentUser.phone || 'Not provided');
+                $('#profile-location').text(currentUser.location || 'Not provided');
+                $('#profile-bio').text(currentUser.bio || 'No bio provided.');
+                $('#join-date').text(currentUser.joinDate ? new Date(currentUser.joinDate).toLocaleDateString() : '...');
+                $('#nav-user-name').text(currentUser.firstName || 'User');
+
+                // Edit form
+                $('#editFirstName').val(currentUser.firstName || '');
+                $('#editLastName').val(currentUser.lastName || '');
+                $('#editEmail').val(currentUser.email || '');
+                $('#editPhone').val(currentUser.phone || '');
+                $('#editLocation').val(currentUser.location || '');
+                $('#editBio').val(currentUser.bio || '');
+
+                // Initialize user courses
+                initUserCourses(currentUser.courses || []);
+
+                // Initialize certificates
+                initCertificates(currentUser.certificates || []);
+
+                // Initialize subscription plans
+                initSubscriptionPlans(currentUser.subscriptionPlan || 'free', currentUser.subscriptionHistory || []);
+
+                // Update stats
+                updateStats(currentUser.courses || []);
+            }
+
+            // Initialize profile picture
+            function initProfilePicture() {
+                if (currentUser.profilePicture) {
+                    $('#profile-picture').attr('src', currentUser.profilePicture);
+                    $('#nav-profile-pic').attr('src', currentUser.profilePicture);
+                    $('#profilePicturePreview').attr('src', currentUser.profilePicture).show();
+                } else {
+                    // If no profile picture, show a blank avatar
+                    const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                    $('#profile-picture').attr('src', blankAvatar);
+                    $('#nav-profile-pic').attr('src', blankAvatar);
+                }
+            }
+
+            // Initialize user courses
+            function initUserCourses(userCourses) {
+                const container = $('#courses-container');
+                container.empty();
+
+                if (userCourses && userCourses.length > 0) {
+                    userCourses.forEach(userCourse => {
+                        const course = allCourses.find(c => c.id === userCourse.id);
+                        if (course) {
+                            const certificateBadge = userCourse.completed ?
+                                '<span class="badge badge-success ml-2"><i class="ti-medall"></i> Certificate</span>' : '';
+
+                            const courseCard = `
+                                <div class="col-md-6">
+                                    <div class="card course-card">
+                                        <img src="${course.image}" class="card-img-top course-img" alt="${course.name}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${course.name} ${certificateBadge}</h5>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="plan-badge">${userCourse.plan || 'Free'}</span>
+                                                <small class="text-muted">${userCourse.progress || 0}% complete</small>
+                                            </div>
+                                            <div class="progress mb-3">
+                                                <div class="progress-bar" role="progressbar" 
+                                                    style="width: ${userCourse.progress || 0}%;" 
+                                                    aria-valuenow="${userCourse.progress || 0}" 
+                                                    aria-valuemin="0" 
+                                                    aria-valuemax="100">
+                                                </div>
+                                            </div>
+                                            ${userCourse.completed ?
+                                    '<button class="btn_1 btn-sm view-certificate" data-course-id="${course.id}">View Certificate</button>' :
+                                    '<a href="course-details.html?courseId=${course.id}" class="btn_1 btn-sm">Continue Learning</a>'}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.append(courseCard);
+                        }
+                    });
+                } else {
+                    container.html(`
+                        <div class="col-12">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="ti-book"></i>
+                                </div>
+                                <h4>No Courses Yet</h4>
+                                <p class="mb-4">You haven't enrolled in any courses yet. Start your learning journey today!</p>
+                                <a href="cource.html" class="btn_1">Browse Courses</a>
+                            </div>
+                        </div>
+                    `);
+                }
+            }
+
+            // Initialize certificates
+            function initCertificates(certificates) {
+                const container = $('#certificates-container');
+                container.empty();
+
+                if (certificates && certificates.length > 0) {
+                    certificates.forEach(cert => {
+                        const course = allCourses.find(c => c.id === cert.courseId);
+                        if (course) {
+                            const certCard = `
+                                <div class="col-md-4 mb-4">
+                                    <div class="card certificate-card">
+                                        <div class="card-body text-center">
+                                            <i class="ti-medall display-4 text-warning mb-3"></i>
+                                            <h5>${cert.courseName}</h5>
+                                            <p class="text-muted">Completed on ${new Date(cert.date).toLocaleDateString()}</p>
+                                            <button class="btn_1 btn-sm view-certificate" data-course-id="${cert.courseId}">View Certificate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.append(certCard);
+                        }
+                    });
+                } else {
+                    container.html(`
+                        <div class="col-12">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="ti-medall"></i>
+                                </div>
+                                <h4>No Certificates Yet</h4>
+                                <p>Complete courses to earn certificates.</p>
+                            </div>
+                        </div>
+                    `);
+                }
+            }
+
+            // Initialize subscription plans
+            function initSubscriptionPlans(userPlan, subscriptionHistory) {
+                // Plan details section
+                const planDetails = $('#plan-details');
+                const plan = subscriptionPlans.find(p => p.id === userPlan);
+
+                if (plan) {
+                    planDetails.html(`
+                        <h5 class="mb-3">${plan.name}</h5>
+                        <p><strong>Price:</strong> ${plan.price}</p>
+                        <h6>Features:</h6>
+                        <ul class="pl-3">
+                            ${plan.features.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    `);
+
+                    $('#active-plan').text(plan.name);
+                }
+
+                // Plans tab content
+                const plansTableBody = $('#plans-table-body');
+                plansTableBody.empty();
+
+                if (subscriptionHistory && subscriptionHistory.length > 0) {
+                    subscriptionHistory.forEach(plan => {
+                        const planData = subscriptionPlans.find(p => p.id === plan.planId);
+                        if (planData) {
+                            const planRow = `
+                                <tr>
+                                    <td>${planData.name}</td>
+                                    <td>
+                                        <span class="badge ${plan.status === 'active' ? 'badge-success' : 'badge-secondary'}">
+                                            ${plan.status}
+                                        </span>
+                                    </td>
+                                    <td>${new Date(plan.startDate).toLocaleDateString()}</td>
+                                    <td>${plan.endDate ? new Date(plan.endDate).toLocaleDateString() : 'N/A'}</td>
+                                    <td>
+                                        ${plan.status === 'active' ?
+                                    '<a href="#" class="btn_4 btn-sm">Manage</a>' :
+                                    '<a href="pricing.html" class="btn_1 btn-sm">Renew</a>'}
+                                    </td>
+                                </tr>
+                            `;
+                            plansTableBody.append(planRow);
+                        }
+                    });
+                } else {
+                    plansTableBody.html(`
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No subscription plans found. <a href="pricing.html">View plans</a>
+                            </td>
+                        </tr>
+                    `);
+                }
+            }
+
+            // Update stats
+            function updateStats(courses) {
+                // Courses count
+                const coursesCount = courses.length;
+                $('#courses-count').text(coursesCount);
+
+                // Completion rate
+                let totalProgress = 0;
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+                        totalProgress += course.progress || 0;
+                    });
+                    const averageProgress = Math.round(totalProgress / courses.length);
+                    $('#completion-rate').text(averageProgress + '%');
+                } else {
+                    $('#completion-rate').text('0%');
+                }
+            }
+
+            // Profile picture upload from main button
+            $('#profile-upload-btn').click(function () {
+                $('#profile-upload-input').click();
+            });
+
+            $('#profile-upload-input').change(function (e) {
+                handleImageUpload(e.target.files[0]);
+            });
+
+            // Profile picture upload from modal
+            $('#editProfilePicture').change(function (e) {
+                handleImageUpload(e.target.files[0]);
+            });
+
+            function handleImageUpload(file) {
+                if (file) {
+                    // Check file size (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('Please select an image smaller than 2MB');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const imageUrl = event.target.result;
+
+                        // Update all profile pictures
+                        $('#profile-picture').attr('src', imageUrl);
+                        $('#nav-profile-pic').attr('src', imageUrl);
+                        $('#profilePicturePreview').attr('src', imageUrl).show();
+
+                        // Update in currentUser
+                        currentUser.profilePicture = imageUrl;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // Save profile
+            $('#saveProfile').click(function () {
+                currentUser = {
+                    ...currentUser,
+                    firstName: $('#editFirstName').val(),
+                    lastName: $('#editLastName').val(),
+                    email: $('#editEmail').val(),
+                    phone: $('#editPhone').val(),
+                    location: $('#editLocation').val(),
+                    bio: $('#editBio').val()
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                initProfileData();
+                initProfilePicture();
+                $('#editProfileModal').modal('hide');
+            });
+
+            // View certificate button handler
+            $(document).on('click', '.view-certificate', function () {
+                const courseId = $(this).data('course-id');
+                const cert = currentUser.certificates.find(c => c.courseId === courseId);
+
+                if (cert) {
+                    const course = allCourses.find(c => c.id === courseId);
+                    $('#certificate-course-name').text(course.name);
+                    $('#certificate-user-name').text(`${currentUser.firstName} ${currentUser.lastName}`);
+                    $('#certificate-date').text(new Date(cert.date).toLocaleDateString());
+                    $('#certificateModal').modal('show');
+                }
+            });
+
+            // Download certificate
+            $('#downloadCertificate').click(function () {
+                alert('Certificate download would start here in a real application');
+                // In a real app, this would trigger a file download
+            });
+
+            // Logout functionality
+            $('#logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            // Initialize the profile
+            initProfileData();
+            initProfilePicture();
+        });
+    </script>
+</body>
+
+</html>

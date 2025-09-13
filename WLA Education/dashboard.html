@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>My Dashboard - Wyatt Academy</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+        }
+
+        .dashboard-container {
+            padding-top: 80px;
+        }
+
+        .dashboard-sidebar {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: white;
+        }
+
+        .dashboard-sidebar-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dashboard-menu {
+            padding: 20px 0;
+        }
+
+        .dashboard-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dashboard-menu li {
+            margin-bottom: 5px;
+        }
+
+        .dashboard-menu li a {
+            display: block;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .dashboard-menu li a:hover,
+        .dashboard-menu li.active a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard-menu li a i {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .dashboard-content {
+            padding: 30px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(79, 70, 229, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .stat-text h5 {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-text h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .current-courses {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .current-courses .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .current-courses .card-header h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .current-courses .card-header h4 i {
+            margin-right: 10px;
+        }
+
+        .current-courses .card-body {
+            padding: 20px;
+        }
+
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-thumb {
+            position: relative;
+        }
+
+        .course-thumb img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .course-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+        }
+
+        .course-progress .progress {
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 5px;
+        }
+
+        .course-progress .progress-bar {
+            background-color: var(--primary-color);
+        }
+
+        .course-progress span {
+            font-size: 12px;
+        }
+
+        .course-details {
+            padding: 15px;
+        }
+
+        .course-details h5 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .course-details p {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-meta span {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .course-meta .btn_4 {
+            padding: 5px 15px;
+            font-size: 12px;
+        }
+
+        .recent-activity {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .recent-activity .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .recent-activity .card-header h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .recent-activity .card-header h4 i {
+            margin-right: 10px;
+        }
+
+        .recent-activity .card-body {
+            padding: 20px;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+        }
+
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(79, 70, 229, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .activity-icon i {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .activity-content {
+            flex-grow: 1;
+        }
+
+        .activity-content p {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .activity-content a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .recommended-courses {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .recommended-courses .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .recommended-courses .card-header h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .recommended-courses .card-header h4 i {
+            margin-right: 10px;
+        }
+
+        .recommended-courses .card-body {
+            padding: 20px;
+        }
+
+        .course-card-sm {
+            display: flex;
+            margin-bottom: 15px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .course-card-sm img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .course-details-sm {
+            padding: 10px;
+            flex-grow: 1;
+        }
+
+        .course-details-sm h5 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .course-meta-sm {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .course-meta-sm .price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @media (max-width: 991px) {
+            .dashboard-sidebar {
+                min-height: auto;
+            }
+
+            .dashboard-content {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="about.html">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="cource.html">Courses</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="" alt="Profile" class="profile-img-nav" id="nav-profile-pic">
+                                        <span id="nav-user-name">User</span>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> My
+                                            Profile</a>
+                                        <a class="dropdown-item" href="my-courses.html"><i class="ti-book mr-2"></i> My
+                                            Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout-btn"><i
+                                                class="ti-power-off mr-2"></i> Logout</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 col-md-4 dashboard-sidebar">
+                    <div class="dashboard-sidebar-header">
+                        <div class="user-avatar">
+                            <img src="" alt="User Avatar" id="sidebar-profile-pic">
+                        </div>
+                        <h4 id="sidebar-user-name">User Name</h4>
+                        <p id="sidebar-user-plan">Free Member</p>
+                    </div>
+                    <div class="dashboard-menu">
+                        <ul>
+                            <li class="active"><a href="dashboard.html"><i class="ti-dashboard"></i> Dashboard</a></li>
+                            <li><a href="my-courses.html"><i class="ti-book"></i> My Courses</a></li>
+                            <li><a href="progress.html"><i class="ti-bar-chart"></i> Progress</a></li>
+                            <li><a href="messages.html"><i class="ti-email"></i> Messages <span
+                                        class="badge badge-primary">3</span></a></li>
+                            <li><a href="certificates.html"><i class="ti-medall"></i> Certificates</a></li>
+                            <li><a href="profile.html"><i class="ti-user"></i> Profile</a></li>
+                            <li><a href="settings.html"><i class="ti-settings"></i> Settings</a></li>
+                            <li><a href="#" id="sidebar-logout"><i class="ti-power-off"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-lg-9 col-md-8 dashboard-content">
+                    <div class="dashboard-header">
+                        <h3><i class="ti-dashboard"></i> Dashboard</h3>
+                        <p>Welcome back! Here's what you're learning.</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row stats-cards">
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="stat-icon">
+                                        <i class="ti-book"></i>
+                                    </div>
+                                    <div class="stat-text">
+                                        <h5>Active Courses</h5>
+                                        <h2 id="active-courses-count">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="stat-icon">
+                                        <i class="ti-medall"></i>
+                                    </div>
+                                    <div class="stat-text">
+                                        <h5>Certificates</h5>
+                                        <h2 id="certificates-count">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="stat-icon">
+                                        <i class="ti-time"></i>
+                                    </div>
+                                    <div class="stat-text">
+                                        <h5>Learning Hours</h5>
+                                        <h2 id="learning-hours">0</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Courses -->
+                    <div class="card current-courses">
+                        <div class="card-header">
+                            <h4><i class="ti-bookmark-alt"></i> Your Current Courses</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="current-courses-container">
+                                <!-- Courses will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card recent-activity">
+                        <div class="card-header">
+                            <h4><i class="ti-alarm-clock"></i> Recent Activity</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-list" id="recent-activity-list">
+                                <!-- Activity will be loaded here -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Courses -->
+                    <div class="card recommended-courses">
+                        <div class="card-header">
+                            <h4><i class="ti-star"></i> Recommended For You</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="recommended-courses-container">
+                                <!-- Recommended courses will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"> </a>
+                        <p>Committed to excellence in education since 2010, Wyatt Academy provides quality learning
+                            experiences for students of all ages.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses and learning tips</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-linkedin"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 123 Education Street, Mandalay, Myanmar</p>
+                            <p><span> Phone :</span> +959 123 456 789</p>
+                            <p><span> Email : </span>info@wyattacademy.edu.mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Initialize dashboard
+            initDashboard(currentUser);
+
+            // Logout functionality
+            $('#logout-btn, #sidebar-logout').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            function initDashboard(user) {
+                // Set user info in sidebar
+                $('#sidebar-user-name').text(`${user.firstName} ${user.lastName}`);
+                $('#sidebar-user-plan').text(`${user.subscriptionPlan.charAt(0).toUpperCase() + user.subscriptionPlan.slice(1)} Member`);
+                $('#sidebar-profile-pic').attr('src', user.profilePicture || 'img/profile_placeholder.jpg');
+
+                // Set user info in navbar
+                $('#nav-user-name').text(user.firstName);
+                $('#nav-profile-pic').attr('src', user.profilePicture || 'img/profile_placeholder.jpg');
+
+                // Sample courses data
+                const allCourses = [
+                    {
+                        id: 'java101',
+                        name: 'Java Programming',
+                        description: 'Master Java from basics to advanced concepts with hands-on projects.',
+                        image: 'img/special_cource_1.png',
+                        category: 'Programming',
+                        duration: '20 hours',
+                        students: 850
+                    },
+                    {
+                        id: 'python101',
+                        name: 'Python Programming',
+                        description: 'Learn Python programming fundamentals and applications.',
+                        image: 'img/special_cource_2.png',
+                        category: 'Programming',
+                        duration: '15 hours',
+                        students: 1200
+                    },
+                    {
+                        id: 'html101',
+                        name: 'HTML & CSS Fundamentals',
+                        description: 'Build beautiful websites with HTML and CSS.',
+                        image: 'img/special_cource_3.png',
+                        category: 'Web Development',
+                        duration: '10 hours',
+                        students: 950
+                    },
+                    {
+                        id: 'react101',
+                        name: 'React JS Masterclass',
+                        description: 'Build modern web applications with React.',
+                        image: 'img/course_1.jpg',
+                        category: 'Web Development',
+                        duration: '25 hours',
+                        students: 1500
+                    },
+                    {
+                        id: 'ux101',
+                        name: 'UX/UI Design Fundamentals',
+                        description: 'Learn user-centered design principles and prototyping.',
+                        image: 'img/course_2.jpg',
+                        category: 'Design',
+                        duration: '18 hours',
+                        students: 800
+                    },
+                    {
+                        id: 'node101',
+                        name: 'Node.js Backend Development',
+                        description: 'Build scalable backend applications with Node.js.',
+                        image: 'img/course_3.jpg',
+                        category: 'Web Development',
+                        duration: '22 hours',
+                        students: 1100
+                    }
+                ];
+
+                // Sample user courses
+                const userCourses = user.courses || [
+                    {
+                        id: 'java101',
+                        progress: 65,
+                        lastAccessed: '2023-06-15T10:30:00'
+                    },
+                    {
+                        id: 'python101',
+                        progress: 30,
+                        lastAccessed: '2023-06-10T14:15:00'
+                    },
+                    {
+                        id: 'html101',
+                        progress: 5,
+                        lastAccessed: '2023-06-05T09:00:00'
+                    }
+                ];
+
+                // Sample certificates
+                const certificates = user.certificates || [
+                    {
+                        id: 'cert-java-001',
+                        courseId: 'java101',
+                        date: '2023-05-15'
+                    }
+                ];
+
+                // Sample activity
+                const activities = [
+                    {
+                        type: 'course',
+                        icon: 'ti-book',
+                        text: `Completed <strong>JavaScript Fundamentals</strong> lesson in <a href="course-lesson.html">Java Programming</a>`,
+                        time: '2 hours ago'
+                    },
+                    {
+                        type: 'certificate',
+                        icon: 'ti-medall',
+                        text: `Earned a certificate for completing <a href="certificates.html">Java Programming</a>`,
+                        time: '1 day ago'
+                    },
+                    {
+                        type: 'question',
+                        icon: 'ti-comment',
+                        text: `Posted a question in <a href="#">Java Programming Q&A</a>`,
+                        time: '2 days ago'
+                    },
+                    {
+                        type: 'enrollment',
+                        icon: 'ti-bookmark',
+                        text: `Enrolled in <a href="course-details.html">HTML & CSS Fundamentals</a> course`,
+                        time: '3 days ago'
+                    }
+                ];
+
+                // Update stats
+                $('#active-courses-count').text(userCourses.length);
+                $('#certificates-count').text(certificates.length);
+                $('#learning-hours').text(userCourses.reduce((acc, course) => acc + (course.progress / 100) * 10, 0).toFixed(1));
+
+                // Populate current courses
+                const currentCoursesContainer = $('#current-courses-container');
+                currentCoursesContainer.empty();
+
+                userCourses.forEach(userCourse => {
+                    const course = allCourses.find(c => c.id === userCourse.id);
+                    if (course) {
+                        const courseCard = `
+                            <div class="col-lg-4 col-md-6">
+                                <div class="course-card">
+                                    <div class="course-thumb">
+                                        <img src="${course.image}" alt="${course.name}">
+                                        <div class="course-progress">
+                                            <div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: ${userCourse.progress}%"
+                                                    aria-valuenow="${userCourse.progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <span>${userCourse.progress}% Complete</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-details">
+                                        <h5>${course.name}</h5>
+                                        <p>${course.description}</p>
+                                        <div class="course-meta">
+                                            <span><i class="ti-time"></i> ${Math.floor(userCourse.progress / 100 * parseInt(course.duration))}h/${course.duration}</span>
+                                            <a href="course-lesson.html?courseId=${course.id}" class="btn_4">${userCourse.progress > 0 ? 'Continue' : 'Start'}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        currentCoursesContainer.append(courseCard);
+                    }
+                });
+
+                // Populate recent activity
+                const activityList = $('#recent-activity-list');
+                activityList.empty();
+
+                activities.forEach(activity => {
+                    const activityItem = `
+                        <li>
+                            <div class="activity-icon">
+                                <i class="${activity.icon}"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>${activity.text}</p>
+                                <span class="activity-time">${activity.time}</span>
+                            </div>
+                        </li>
+                    `;
+                    activityList.append(activityItem);
+                });
+
+                // Populate recommended courses (filter out courses user is already enrolled in)
+                const recommendedCoursesContainer = $('#recommended-courses-container');
+                recommendedCoursesContainer.empty();
+
+                const enrolledCourseIds = userCourses.map(course => course.id);
+                const recommendedCourses = allCourses.filter(course => !enrolledCourseIds.includes(course.id)).slice(0, 3);
+
+                recommendedCourses.forEach(course => {
+                    const courseCard = `
+                        <div class="col-lg-4 col-md-6">
+                            <div class="course-card-sm">
+                                <img src="${course.image}" alt="${course.name}">
+                                <div class="course-details-sm">
+                                    <h5>${course.name}</h5>
+                                    <div class="course-meta-sm">
+                                        <span><i class="ti-time"></i> ${course.duration}</span>
+                                        <span><i class="ti-user"></i> ${course.students}</span>
+                                        <span class="price">$${Math.floor(Math.random() * 100) + 50}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    recommendedCoursesContainer.append(courseCard);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Pricing Plans</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .pricing-plan-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            background: white;
+        }
+
+        .pricing-plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-header {
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .free-plan {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .pro-plan {
+            background: linear-gradient(135deg, #f46b45 0%, #eea849 100%);
+        }
+
+        .premium-plan {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .plan-period {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .plan-features {
+            padding: 30px;
+        }
+
+        .plan-features ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .plan-features ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .plan-features ul li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features ul li i {
+            margin-right: 10px;
+            color: #4f46e5;
+        }
+
+        .plan-footer {
+            padding: 20px;
+            background: #f9f9ff;
+            text-align: center;
+        }
+
+        .recommended-badge {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            background: #4f46e5;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 0 0 5px 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 50px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .feature-name {
+            font-weight: 500;
+        }
+
+        .feature-value {
+            text-align: center;
+        }
+
+        .feature-value i {
+            font-size: 18px;
+        }
+
+        .text-success {
+            color: #28a745;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-header {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .faq-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .faq-item.active .faq-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="about.html">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="cource.html">Courses</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="pricing.html">Pricing</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="blog.html">Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="img/default-profile.png" alt="Profile" class="profile-img">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> My
+                                            Profile</a>
+                                        <a class="dropdown-item" href="my-courses.html"><i class="ti-book mr-2"></i> My
+                                            Courses</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout-btn"><i
+                                                class="ti-power-off mr-2"></i> Logout</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end-->
+
+    <!-- banner part start-->
+    <section class="banner_part">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="banner_text">
+                        <div class="banner_text_iner">
+                            <h5>Choose the perfect plan</h5>
+                            <h1>Pricing Plans</h1>
+                            <p>Select the subscription that matches your learning goals and budget. All plans include
+                                access to our premium courses and learning resources.</p>
+                            <a href="#plans" class="btn_1">View Plans</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner part start-->
+
+    <section class="section_padding" id="plans">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <p>our plans</p>
+                        <h2>Choose Your Plan</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Free Plan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-plan-card">
+                        <div class="pricing-header free-plan">
+                            <div class="plan-name">Free</div>
+                            <div class="plan-price">$0</div>
+                            <div class="plan-period">forever</div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="ti-check"></i> Access to basic courses</li>
+                                <li><i class="ti-check"></i> Community support</li>
+                                <li><i class="ti-check"></i> Limited course materials</li>
+                                <li><i class="ti-close"></i> No certificates</li>
+                                <li><i class="ti-close"></i> No mentor access</li>
+                                <li><i class="ti-close"></i> No project reviews</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="#" class="btn_4">Current Plan</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-plan-card" style="position: relative;">
+                        <div class="recommended-badge">Recommended</div>
+                        <div class="pricing-header pro-plan">
+                            <div class="plan-name">Pro</div>
+                            <div class="plan-price">$19</div>
+                            <div class="plan-period">per month</div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="ti-check"></i> All courses unlocked</li>
+                                <li><i class="ti-check"></i> Certificate upon completion</li>
+                                <li><i class="ti-check"></i> Priority support</li>
+                                <li><i class="ti-check"></i> Downloadable resources</li>
+                                <li><i class="ti-check"></i> Weekly mentor Q&A</li>
+                                <li><i class="ti-close"></i> No 1-on-1 mentoring</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="payment.html?plan=Pro&price=19" class="btn_1">Upgrade Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-plan-card">
+                        <div class="pricing-header premium-plan">
+                            <div class="plan-name">Premium</div>
+                            <div class="plan-price">$49</div>
+                            <div class="plan-period">per month</div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="ti-check"></i> All Pro features</li>
+                                <li><i class="ti-check"></i> 1-on-1 mentoring</li>
+                                <li><i class="ti-check"></i> Project reviews</li>
+                                <li><i class="ti-check"></i> Career counseling</li>
+                                <li><i class="ti-check"></i> Resume assistance</li>
+                                <li><i class="ti-check"></i> Job placement help</li>
+                            </ul>
+                        </div>
+                        <div class="plan-footer">
+                            <a href="payment.html?plan=Premium&price=49" class="btn_1">Get Premium</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="section_tittle text-center">
+                        <h2>Plan Comparison</h2>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Features</th>
+                                    <th>Free</th>
+                                    <th>Pro</th>
+                                    <th>Premium</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="feature-name">Access to all courses</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Downloadable resources</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Completion certificates</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Priority support</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Weekly mentor Q&A</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">1-on-1 mentoring</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Project reviews</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                                <tr>
+                                    <td class="feature-name">Career services</td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-close text-muted"></i></td>
+                                    <td class="feature-value"><i class="ti-check text-success"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="section_tittle text-center">
+                        <h2>Frequently Asked Questions</h2>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            What payment methods do you accept?
+                        </div>
+                        <div class="faq-content">
+                            <p>We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank
+                                transfers. All payments are processed securely through our payment gateway.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            Can I cancel my subscription anytime?
+                        </div>
+                        <div class="faq-content">
+                            <p>Yes, you can cancel your subscription at any time. Your access will continue until the
+                                end of your current billing period, and you won't be charged again.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            Do you offer discounts for students?
+                        </div>
+                        <div class="faq-content">
+                            <p>Yes! We offer a 30% discount for verified students. Please contact our support team with
+                                proof of your student status to get your discount code.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            Can I switch between plans?
+                        </div>
+                        <div class="faq-content">
+                            <p>Absolutely. You can upgrade or downgrade your plan at any time. When upgrading, you'll
+                                only pay the prorated difference for the remaining time in your billing cycle.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            Is there a free trial available?
+                        </div>
+                        <div class="faq-content">
+                            <p>We offer a 7-day free trial for our Pro plan so you can experience all the premium
+                                features before committing. No credit card is required for the trial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer part start-->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"> </a>
+                        <p>Committed to excellence in education since 2010, Wyatt Academy provides quality learning
+                            experiences for students of all ages.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses, events, and educational resources.</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-linkedin"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 123 Education Street, Mandalay, Myanmar</p>
+                            <p><span> Phone :</span> +959 123 456 789</p>
+                            <p><span> Email : </span>info@wyattacademy.edu.mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer part end-->
+
+    <!-- jquery plugins here-->
+    <!-- jquery -->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // FAQ toggle functionality
+            $('.faq-header').click(function () {
+                $(this).parent().toggleClass('active');
+                $(this).siblings('.faq-content').slideToggle();
+            });
+
+            // Get current plan from localStorage
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            const currentPlan = currentUser.subscriptionPlan || 'free';
+
+            // Highlight current plan
+            if (currentPlan === 'pro') {
+                $('.pricing-plan-card').eq(1).find('.btn_1').removeClass('btn_1').addClass('btn_4').text('Current Plan');
+            } else if (currentPlan === 'premium') {
+                $('.pricing-plan-card').eq(2).find('.btn_1').removeClass('btn_1').addClass('btn_4').text('Current Plan');
+            }
+
+            // Logout functionality
+            $('#logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

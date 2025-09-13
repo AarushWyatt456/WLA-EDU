@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Admin Dashboard</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 90px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            width: 240px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+            background-color: white;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 2rem;
+        }
+
+        .card-admin {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-responsive {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .badge-premium {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .badge-pro {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .badge-free {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box .form-control {
+            padding-left: 40px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stats-label {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="" alt="Profile" class="admin-profile-img" id="admin-profile-pic">
+                        <span id="admin-name">Admin User</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html"><i class="ti-user mr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="#"><i class="ti-settings mr-2"></i> Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" id="admin-logout-btn"><i class="ti-power-off mr-2"></i>
+                            Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="text-center py-4">
+            <img src="img/logo.png" alt="Wyatt Academy Logo" width="160">
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="admin-dashboard.html">
+                    <i class="ti-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-users.html">
+                    <i class="ti-user"></i> Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-courses.html">
+                    <i class="ti-book"></i> Courses
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="certificate.html">
+                    <i class="ti-medall"></i> Certificates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-payments.html">
+                    <i class="ti-wallet"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin-settings.html">
+                    <i class="ti-settings"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Admin Dashboard</h2>
+                <div class="text-muted">Welcome back, <span id="admin-greeting-name">Admin</span></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="total-users">0</div>
+                        <div class="stats-label">Total Users</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="active-courses">0</div>
+                        <div class="stats-label">Active Courses</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="total-revenue">$0</div>
+                        <div class="stats-label">Total Revenue</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-number" id="new-signups">0</div>
+                        <div class="stats-label">New Signups (7d)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="mb-4">User Growth</h5>
+                        <canvas id="userGrowthChart" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="chart-container">
+                        <h5 class="mb-4">User Plans</h5>
+                        <canvas id="userPlansChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card-admin">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Recent Users</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Plan</th>
+                                            <th>Status</th>
+                                            <th>Joined</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-users-table">
+                                        <!-- Recent users will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Get admin data from localStorage
+            const currentAdmin = JSON.parse(localStorage.getItem('currentUser')) || {
+                firstName: "Admin",
+                lastName: "User",
+                email: "admin@wyattacademy.com",
+                profilePicture: ""
+            };
+
+            // Initialize admin dashboard
+            initAdminDashboard();
+
+            function initAdminDashboard() {
+                // Set admin name and profile picture
+                $('#admin-name').text(`${currentAdmin.firstName} ${currentAdmin.lastName}`);
+                $('#admin-greeting-name').text(currentAdmin.firstName);
+                if (currentAdmin.profilePicture) {
+                    $('#admin-profile-pic').attr('src', currentAdmin.profilePicture);
+                } else {
+                    const blankAvatar = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E`;
+                    $('#admin-profile-pic').attr('src', blankAvatar);
+                }
+
+                // Load sample data
+                loadDashboardData();
+            }
+
+            function loadDashboardData() {
+                // Get all users
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const recentUsers = users.slice(-5).reverse();
+
+                // Update stats
+                $('#total-users').text(users.length);
+                $('#active-courses').text(12); // Hardcoded for demo
+                $('#total-revenue').text(`$${(users.length * 19.99).toFixed(2)}`);
+                $('#new-signups').text(users.filter(user => {
+                    const joinDate = new Date(user.joinDate);
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    return joinDate > weekAgo;
+                }).length);
+
+                // Populate recent users table
+                const recentUsersTable = $('#recent-users-table');
+                recentUsersTable.empty();
+
+                recentUsers.forEach(user => {
+                    let statusBadge;
+                    if (user.status === 'active') {
+                        statusBadge = '<span class="badge badge-success">Active</span>';
+                    } else if (user.status === 'inactive') {
+                        statusBadge = '<span class="badge badge-secondary">Inactive</span>';
+                    } else {
+                        statusBadge = '<span class="badge badge-danger">Suspended</span>';
+                    }
+
+                    let planBadge;
+                    if (user.subscriptionPlan === 'premium') {
+                        planBadge = '<span class="badge badge-premium">Premium</span>';
+                    } else if (user.subscriptionPlan === 'pro') {
+                        planBadge = '<span class="badge badge-pro">Pro</span>';
+                    } else {
+                        planBadge = '<span class="badge badge-free">Free</span>';
+                    }
+
+                    const userRow = `
+                        <tr>
+                            <td>
+                                <img src="${user.profilePicture || 'img/profile_placeholder.jpg'}" class="admin-profile-img">
+                                ${user.firstName} ${user.lastName}
+                            </td>
+                            <td>${user.email}</td>
+                            <td>${planBadge}</td>
+                            <td>${statusBadge}</td>
+                            <td>${new Date(user.joinDate).toLocaleDateString()}</td>
+                            <td>
+                                <a href="admin-users.html" class="btn btn-sm btn-outline-primary">
+                                    <i class="ti-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                    recentUsersTable.append(userRow);
+                });
+
+                // Initialize charts
+                initCharts(users);
+            }
+
+            function initCharts(users) {
+                // User growth chart
+                const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+                const userGrowthChart = new Chart(userGrowthCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'New Users',
+                            data: [12, 19, 15, 27, 34, 42],
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            borderColor: 'rgba(79, 70, 229, 1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                // User plans chart
+                const userPlansCtx = document.getElementById('userPlansChart').getContext('2d');
+                const userPlansChart = new Chart(userPlansCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Free', 'Pro', 'Premium'],
+                        datasets: [{
+                            data: [
+                                users.filter(u => u.subscriptionPlan === 'free').length,
+                                users.filter(u => u.subscriptionPlan === 'pro').length,
+                                users.filter(u => u.subscriptionPlan === 'premium').length
+                            ],
+                            backgroundColor: [
+                                '#6c757d',
+                                'rgba(79, 70, 229, 0.8)',
+                                'rgba(124, 58, 237, 0.8)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Logout functionality
+            $('#admin-logout-btn').click(function (e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

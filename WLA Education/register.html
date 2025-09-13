@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Wyatt Academy - Registration</title>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #7c3aed;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .auth-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            background: white;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .is-invalid {
+            border-color: var(--danger-color);
+        }
+
+        .password-strength {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .text-weak {
+            color: var(--danger-color);
+        }
+
+        .text-medium {
+            color: #f59e0b;
+        }
+
+        .text-strong {
+            color: var(--success-color);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .profile-picture-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e5e7eb;
+            margin: 0 auto 15px;
+        }
+
+        .profile-picture-upload {
+            display: none;
+        }
+
+        .profile-picture-label {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo">
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end"
+                            id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="login.html">Login</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join Wyatt Academy and start your learning journey today</p>
+                </div>
+
+                <form id="registration-form">
+                    <div class="profile-picture-container">
+                        <img src="img/profile_placeholder.jpg" alt="Profile" class="profile-picture-preview"
+                            id="profile-preview">
+                        <input type="file" id="profile-picture" class="profile-picture-upload" accept="image/*">
+                        <label for="profile-picture" class="profile-picture-label">
+                            <i class="ti-camera mr-2"></i> Upload Photo
+                        </label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" class="form-control" required>
+                                <div class="error-message" id="first-name-error"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" class="form-control" required>
+                                <div class="error-message" id="last-name-error"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required minlength="8">
+                        <div class="password-strength" id="password-strength"></div>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-control" required>
+                        <div class="error-message" id="confirm-password-error"></div>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                        <div class="error-message" id="terms-error"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-auth">
+                        <span id="submit-text">Create Account</span>
+                        <span id="submit-spinner" class="spinner-border spinner-border-sm d-none"></span>
+                    </button>
+                </form>
+
+                <div class="auth-toggle">
+                    <p>Already have an account? <a href="login.html">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="img/logo.png" alt="Wyatt Academy Logo"> </a>
+                        <p>Committed to excellence in education since 2010, Wyatt Academy provides quality learning
+                            experiences for students of all ages.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with our latest courses and learning tips</p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address'
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-linkedin"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact us</h4>
+                        <div class="contact_info">
+                            <p><span> Address :</span> 123 Education Street, Mandalay, Myanmar</p>
+                            <p><span> Phone :</span> +959 123 456 789</p>
+                            <p><span> Email : </span>info@wyattacademy.edu.mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    Wyatt Academy
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize admin account if not exists
+            function initializeAdminAccount() {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const adminExists = users.some(u => u.role === 'admin');
+
+                if (!adminExists) {
+                    const adminUser = {
+                        id: 'admin_' + Math.random().toString(36).substr(2, 9),
+                        firstName: "Admin",
+                        lastName: "User",
+                        email: "admin@wyattacademy.com",
+                        password: "admin123",
+                        role: "admin",
+                        joinDate: new Date().toISOString(),
+                        profilePicture: "",
+                        courses: [],
+                        subscriptionPlan: "premium",
+                        status: "active"
+                    };
+                    users.push(adminUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+            }
+
+            // Profile picture preview
+            $('#profile-picture').change(function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('Please select an image smaller than 2MB');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        $('#profile-preview').attr('src', event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Password strength indicator
+            $('#password').on('input', function () {
+                const password = $(this).val();
+                const strengthText = $('#password-strength');
+
+                if (password.length === 0) {
+                    strengthText.text('').removeClass('text-weak text-medium text-strong');
+                    return;
+                }
+
+                if (password.length < 8) {
+                    strengthText.text('Weak').addClass('text-weak').removeClass('text-medium text-strong');
+                } else if (!/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+                    strengthText.text('Medium').addClass('text-medium').removeClass('text-weak text-strong');
+                } else {
+                    strengthText.text('Strong').addClass('text-strong').removeClass('text-weak text-medium');
+                }
+            });
+
+            // Form submission
+            $('#registration-form').submit(function (e) {
+                e.preventDefault();
+                $('.error-message').hide();
+                $('.is-invalid').removeClass('is-invalid');
+
+                // Get form values
+                const firstName = $('#first-name').val().trim();
+                const lastName = $('#last-name').val().trim();
+                const email = $('#email').val().trim();
+                const password = $('#password').val();
+                const confirmPassword = $('#confirm-password').val();
+                const termsChecked = $('#terms').is(':checked');
+                const profilePicture = $('#profile-picture')[0].files[0];
+
+                // Validate inputs
+                let isValid = true;
+
+                if (!firstName) {
+                    $('#first-name').addClass('is-invalid');
+                    $('#first-name-error').text('First name is required').show();
+                    isValid = false;
+                }
+
+                if (!lastName) {
+                    $('#last-name').addClass('is-invalid');
+                    $('#last-name-error').text('Last name is required').show();
+                    isValid = false;
+                }
+
+                if (!email) {
+                    $('#email').addClass('is-invalid');
+                    $('#email-error').text('Email is required').show();
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    $('#email').addClass('is-invalid');
+                    $('#email-error').text('Please enter a valid email').show();
+                    isValid = false;
+                }
+
+                if (password.length < 8) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-error').text('Password must be at least 8 characters').show();
+                    isValid = false;
+                } else if (!/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-error').text('Password must contain at least one uppercase letter and one number').show();
+                    isValid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    $('#confirm-password').addClass('is-invalid');
+                    $('#confirm-password-error').text('Passwords do not match').show();
+                    isValid = false;
+                }
+
+                if (!termsChecked) {
+                    $('#terms-error').text('You must agree to the terms').show();
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                // Show loading state
+                $('#submit-text').text('Creating Account...');
+                $('#submit-spinner').removeClass('d-none');
+
+                // Check if email already exists
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const emailExists = users.some(user => user.email === email);
+
+                if (emailExists) {
+                    $('#email').addClass('is-invalid');
+                    $('#email-error').text('This email is already registered').show();
+                    $('#submit-text').text('Create Account');
+                    $('#submit-spinner').addClass('d-none');
+                    return;
+                }
+
+                // Handle profile picture upload
+                let profilePictureData = 'img/profile_placeholder.jpg';
+                if (profilePicture) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        profilePictureData = event.target.result;
+                        createUser();
+                    };
+                    reader.readAsDataURL(profilePicture);
+                } else {
+                    createUser();
+                }
+
+                function createUser() {
+                    // Create new user object
+                    const newUser = {
+                        id: 'user_' + Math.random().toString(36).substr(2, 9),
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        password: password,
+                        profilePicture: profilePictureData,
+                        role: 'student',
+                        joinDate: new Date().toISOString(),
+                        courses: [],
+                        subscriptionPlan: 'free',
+                        status: 'active',
+                        phone: '',
+                        location: '',
+                        bio: ''
+                    };
+
+                    // Save user to localStorage
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+
+                    // Set as current user
+                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+                    // Initialize admin account if not exists
+                    initializeAdminAccount();
+
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
